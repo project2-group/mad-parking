@@ -26,7 +26,8 @@ const userSchema = new Schema(
       type: String
     },
     validationCode: { type: String, unique: true },
-    active: Boolean
+    active: Boolean,
+    favoriteParkings: [{ type : Schema.Types.ObjectId, ref: 'Parking' }]
   },
   {
     timestamps: true
