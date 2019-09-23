@@ -23,11 +23,11 @@ const userSchema = new Schema(
       match: [EMAIL_PATTERN, "this is not a correct email"]
     },
     photo: {
-      url: String,
-      name: String
+      url: {type: String, default: "./../public/images/ef3b3605aeefde1f05bcfa2f74e84329.png"},
+      name: {type: String, default: "avatar"}
     },
     validationCode: { type: String, unique: true },
-    active: Boolean,
+    active: {type: Boolean, default: false},
     favoriteParkings: [{ type : Schema.Types.ObjectId, ref: 'Parking' }]
   },
   {
