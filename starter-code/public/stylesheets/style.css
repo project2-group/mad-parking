@@ -1,0 +1,20 @@
+html {
+  font-size: 10px; }
+
+* {
+  box-sizing: border-box; }
+
+header.home {
+  border: 1px solid red; }
+  header.home h1 {
+    text-align: center; }
+  header.home nav {
+    display: none; }
+
+body {
+  font: 1.6rem "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+h2 {
+  font-size: 5rem; }
+
+/*# sourceMappingURL=style.css.map */

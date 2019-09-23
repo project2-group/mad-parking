@@ -1,8 +1,9 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+html { font-size: 10px }
+* { box-sizing: border-box }
 
-a {
-  color: #00B7FF;
-}
+@import 'sass/utils/_variables.scss';
+
+@import 'sass/layout/_header.scss';
+
+body { font: $size-text $font-text }
+h2 { font-size: $size-h2 }
