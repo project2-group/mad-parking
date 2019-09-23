@@ -17,4 +17,8 @@ body {
 h2 {
   font-size: 5rem; }
 
+#map {
+  width: 100%;
+  height: 400px; }
+
 /*# sourceMappingURL=style.css.map */
