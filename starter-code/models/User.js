@@ -23,7 +23,8 @@ const userSchema = new Schema(
       match: [EMAIL_PATTERN, "this is not a correct email"]
     },
     photo: {
-      type: String
+      url: String,
+      name: String
     },
     validationCode: { type: String, unique: true },
     active: Boolean,
