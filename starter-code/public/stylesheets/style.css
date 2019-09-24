@@ -15,7 +15,7 @@ header.home {
   position: absolute;
   top: 100vh;
   transition: top 0.8s cubic-bezier(0.055, 0.75, 0.055, 0.86);
-  background-color: red;
+  background-color: skyblue;
   border-bottom: 1px solid blue;
   height: calc(100vh - 5rem);
   width: 100%; }

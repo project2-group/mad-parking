@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +8,39 @@
   <title>{{dataView.title}}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css">
   <link rel="stylesheet" href="/stylesheets/style.css" />
-   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUeQXCyJDlhOtCB8JwWAk8zCxpjk6k-jo&libraries=places" async defer></script>
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUeQXCyJDlhOtCB8JwWAk8zCxpjk6k-jo"></script>
-    
-   <script src="/javascripts/axiosService.js"></script>
-   <script src="/javascripts/functions.inc.js"></script>
-   
-   
-   {{!-- <script type="text/javascript" src="/javascripts/viewControllers/map/geolocal.js"></script>
-   <script type="text/javascript" src="/javascripts/viewControllers/map/autocomplete.js"></script> --}}
-   <script type="text/javascript" src="/javascripts/viewControllers/search.js"></script>
-   
+
+
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDUeQXCyJDlhOtCB8JwWAk8zCxpjk6k-jo&libraries=places"></script>
+
+  <script src="/javascripts/services/axios.service.js"></script>
+  <script src="/javascripts/services/map.service.js"></script>
+  <script src="/javascripts/services/transition.service.js"></script>
+
+  <script src="/javascripts/view-handlers/search.handler.js"></script>
+
+  
+
+
 </head>
+
 <body>
-  
-  <header class="{{dataView.header}}">
-    <h1><a href="{{url}}">madParking</a></h1>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/auth/login">Login</a>
-      <a href="/auth/signup">Signup</a>
-      <a href="/auth/logout">Logout</a>
-    </nav>
-  </header>
+  <div class="container">
+    <header class="{{dataView.header}}">
+      <h1><a href="{{url}}">madParking</a></h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/auth/login">Login</a>
+        <a href="/auth/signup">Signup</a>
+        <a href="/auth/logout">Logout</a>
+      </nav>
+    </header>
 
 
-  {{{body}}}
+    {{{body}}}
 
-  
+  </div>
 </body>
- 
+
 </html>

@@ -1,3 +1,11 @@
 <h2>Encuentra plaza en tu parking más cercano {{dataView.title}}</h2>
+
 <button id="search-map">Buscar en Madrid </button>
-<script src="/javascripts/viewControllers/home.js"></script>
+
+<script src="/javascripts/view-handlers/home.handler.js"></script>
+
+{{#if dataView.search}}
+  <script>
+    searchView.create();
+  </script>
+{{/if}}
