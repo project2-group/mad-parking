@@ -1,6 +1,6 @@
-const showSection = (section) => {
+const showSection = () => {
   
-  const sectionDOM = document.querySelector(`.${section}`);
+  const sectionDOM = document.querySelector(`.template-animated-view`);
   setTimeout(() =>  sectionDOM.classList.add("show"), 30);
 }
 
@@ -15,6 +15,6 @@ const loadView = (responseFromAPI, section) => {
   body.innerHTML += bodyContent;
   window.history.pushState("", "", `/${section}`);
     
-  showSection(section);
+  showSection();
 }
 

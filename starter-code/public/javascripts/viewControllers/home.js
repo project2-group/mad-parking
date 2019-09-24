@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   
+  
+
   const goToSearchParking = (route) => restAppApi.get(route);
   
   document.getElementById("search-map").onclick = () => {
-    goToSearchParking("test")
-    .then(responseFromAPI => loadView(responseFromAPI, "test"))
+    goToSearchParking("search")
+    .then(responseFromAPI => loadView(responseFromAPI, "search"))
     .catch(err => console.log("Error is: ", err));
   };
 
