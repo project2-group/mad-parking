@@ -32,7 +32,8 @@ router.get("/update-parkings", (req, res, next) => {
                   location: {
                     type: "Point",
                     coordinates: [element.longitude, element.latitude]
-                  }
+                  },
+                  name: element.name
                 }
               },
               { new: true }
@@ -54,12 +55,14 @@ router.get("/update-parkings", (req, res, next) => {
             ) {
               element.latitude = element.latitude.replace(",", ".");
             }
+            console.log(element.name);
             Parking.create({
               id_ayto: element.id,
               location: {
                 type: "Point",
                 coordinates: [element.longitude, element.latitude]
-              }
+              },
+              name: element.name
             });
           }
         });
