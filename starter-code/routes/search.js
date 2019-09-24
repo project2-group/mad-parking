@@ -3,30 +3,26 @@ const Parking = require("../models/Parking");
 
 const router = express.Router();
 
-// router.get("/parkings", (req, res, next) => {
-//   Parking.find().then(allParkings => {
-//     res.json(allParkings);
-//   });
-// });
 
-router.get("/", (req, res, next) => {
-
+router.get('/', (req, res, next) => {
   const dataView = {
-    title: 'madParking - Cocacola',
-    header: 'home'
+    title: 'madParking - Plazas de aparcamiento',
+    header: 'home',
+    search: true
   }
-  // Parking.find({})
-  //   .then(allParkings => res.render("search/search-parking", { allParkings, dataView }))
-  //   .catch(error => next(error));
-  Parking.find().then(allParkings => {
-    res.json({parkings: allParkings, dataview: dataView});
-  });
+
+  res.render('index', {dataView});
 });
 
-// router.get("/:id", (req, res, next) => {
-//   Parking.findById(req.params.id)
-//     .then(parkingDetail => res.render("detail", { parkingDetail }))
-//     .catch(error => next(error));
+// router.get('/search/:city?', (req, res, next) => {
+//   const dataView = {
+//     title: 'madParking - color' + req.params.city,
+//     header: 'home'
+//   }
+
+//   res.render('index', {dataView});
 // });
+
+
 
 module.exports = router;
