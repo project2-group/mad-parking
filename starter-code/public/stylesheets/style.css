@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html {
   font-size: 10px; }
 
@@ -18,7 +19,6 @@ body {
 h2 {
   font-size: 5rem; }
 
-
 .test {
   position: absolute;
   top: 100vh;
@@ -34,9 +34,8 @@ h2 {
 .mapHere {
   color: blue; }
 
-#map {
+#map  {
   width: 100%;
   height: 400px; }
-
 
 /*# sourceMappingURL=style.css.map */
