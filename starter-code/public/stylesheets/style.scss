@@ -5,6 +5,7 @@ html { font-size: 10px }
 
 @import 'sass/layout/_header.scss';
 
+
 body { 
   font: $size-text $font-text; 
   overflow: hidden;
@@ -29,4 +30,12 @@ h2 { font-size: $size-h2 }
 }
 .mapHere {
   color: blue;
+
+body { font: $size-text $font-text }
+h2 { font-size: $size-h2 }
+
+#map {
+  width: 100%;
+  height: 400px;
+
 }
