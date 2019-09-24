@@ -8,23 +8,69 @@ const parkingApi = new ParkingApi(
 );
 
 router.get("/update-parkings", (req, res, next) => {
-  Parking.deleteMany()
-    .then(
-      parkingApi.getParkings().then(allParkings => {
-        allParkings.data.forEach(element => {
-          Parking.create({
-            id_ayto: element.id,
-            location: {
-              type: "Point",
-              coordinates: [element.longitude, element.latitude]
+  parkingApi
+    .getParkings()
+    .then(allParkings => {
+      allParkings.data.forEach(element => {
+        Parking.findOne({ id_ayto: element.id }).then(parkingFound => {
+          if (parkingFound) {
+            if (element.longitude === "" || element.latitude === "") {
+              return;
+            } else if (element.longitude > -2 || element.latitude > 42) {
+              return;
+            } else if (
+              element.latitude.includes(",") > 0 ||
+              element.longitude.includes(",") > 0
+            ) {
+              element.latitude = element.latitude.replace(",", ".");
             }
-          })
-            .then(() => res.redirect('/'))
-            .catch(error => console.log(error));
+            Parking.findOneAndUpdate(
+              { id_ayto: element.id },
+              {
+                $set: {
+                  id_ayto: element.id,
+                  location: {
+                    type: "Point",
+                    coordinates: [element.longitude, element.latitude]
+                  }
+                }
+              },
+              { new: true }
+            )
+              .then(updatedParking => {
+                return;
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          } else {
+            if (element.longitude === "" || element.latitude === "") {
+              return;
+            } else if (element.longitude > -2 || element.latitude > 42) {
+              return;
+            } else if (
+              element.latitude.includes(",") > 0 ||
+              element.longitude.includes(",") > 0
+            ) {
+              element.latitude = element.latitude.replace(",", ".");
+            }
+            Parking.create({
+              id_ayto: element.id,
+              location: {
+                type: "Point",
+                coordinates: [element.longitude, element.latitude]
+              }
+            });
+          }
         });
-      })
-    )
-    .catch(error => console.log(error));
+      });
+    })
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 module.exports = router;
