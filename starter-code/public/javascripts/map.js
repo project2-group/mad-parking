@@ -1,4 +1,10 @@
-window.onload = () => {
+
+  function loadMapControllers() {
+
+  
+  const mapDOM = document.getElementById("map");
+
+  
   
   // Esta constante declara el centro de madrid
   const centerPoint = {
@@ -7,7 +13,7 @@ window.onload = () => {
   };
 
   // Recoge el contenedor del mapa del dom y pinta un mapa dentro haciendole el zoom definido y posicionando el centro
-  const mapDOM = document.getElementById("map");
+  
   const map = new google.maps.Map(mapDOM, {
     zoom: 11,
     center: centerPoint
@@ -141,8 +147,8 @@ window.onload = () => {
   //     });
   // }
 
+  
   initMap();
-
   // axios.get("/").then(({ data }) => {
   //   data.forEach(parking => {
   //     new google.maps.Marker({
@@ -157,4 +163,5 @@ window.onload = () => {
     
   //   initMap();
   // });
-};
+}
+
