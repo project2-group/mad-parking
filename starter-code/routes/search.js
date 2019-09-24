@@ -9,11 +9,16 @@ const router = express.Router();
 //   });
 // });
 
-// router.get("/map", (req, res, next) => {
-//   Parking.find({})
-//     .then(allParkings => res.render("map", { allParkings }))
-//     .catch(error => next(error));
-// });
+router.get("/", (req, res, next) => {
+
+  const dataView = {
+    title: 'madParking - Cocacola',
+    header: 'home'
+  }
+  Parking.find({})
+    .then(allParkings => res.render("search/search-parking", { allParkings, dataView }))
+    .catch(error => next(error));
+});
 
 // router.get("/:id", (req, res, next) => {
 //   Parking.findById(req.params.id)
