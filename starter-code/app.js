@@ -66,10 +66,9 @@ app.use(flash());
 require('./passport')(app);
     
 
-const index = require('./routes/index');
+const index = require('./routes/index.routes');
 app.use('/', index);
       
-const admin = require('./routes/admin.routes');
-app.use('/admin', admin)
+
 
 module.exports = app;
