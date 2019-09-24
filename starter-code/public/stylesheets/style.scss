@@ -5,5 +5,28 @@ html { font-size: 10px }
 
 @import 'sass/layout/_header.scss';
 
-body { font: $size-text $font-text }
+body { 
+  font: $size-text $font-text; 
+  overflow: hidden;
+}
+
 h2 { font-size: $size-h2 }
+
+
+// Esto irá en stylesheets/sass/pages/section.scss cuando esté definido el nombre de la sección
+.test {
+  position: absolute;
+  top: 100vh;
+  transition: top .8s cubic-bezier(0.055, 0.75, 0.055, 0.86);
+  background-color: red;
+  border-bottom: 1px solid blue;
+  height: calc(100vh - 5rem);
+  width: 100%;
+
+}
+.test.show {
+  top: 5rem; 
+}
+.mapHere {
+  color: blue;
+}

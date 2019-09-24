@@ -21,6 +21,8 @@ const app = express();
 
 require('./configs/db.config');
 
+app.locals.url = `${process.env.HOST}:${process.env.PORT}`;
+
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
