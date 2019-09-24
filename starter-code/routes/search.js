@@ -15,9 +15,12 @@ router.get("/", (req, res, next) => {
     title: 'madParking - Cocacola',
     header: 'home'
   }
-  Parking.find({})
-    .then(allParkings => res.render("search/search-parking", { allParkings, dataView }))
-    .catch(error => next(error));
+  // Parking.find({})
+  //   .then(allParkings => res.render("search/search-parking", { allParkings, dataView }))
+  //   .catch(error => next(error));
+  Parking.find().then(allParkings => {
+    res.json({parkings: allParkings, dataview: dataView});
+  });
 });
 
 // router.get("/:id", (req, res, next) => {
