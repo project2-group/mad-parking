@@ -6,6 +6,7 @@ const parkingSchema = new Schema(
     id_ayto: Number,
     comments: [{type : Schema.Types.ObjectId, ref: 'Comment'}],
     assessment: Number,
+    location: { type: { type: String }, coordinates: [Number] }
   },
   {
     timestamps: true

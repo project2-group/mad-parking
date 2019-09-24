@@ -69,5 +69,7 @@ require('./passport')(app);
 const index = require('./routes/index');
 app.use('/', index);
       
+const admin = require('./routes/admin.routes');
+app.use('/admin', admin)
 
 module.exports = app;
