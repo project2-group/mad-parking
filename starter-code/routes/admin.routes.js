@@ -4,7 +4,7 @@ const ParkingApi = require("../models/apiHandlers/parkingHandler");
 const Parking = require("../models/Parking");
 
 const parkingApi = new ParkingApi(
-  "https://datos.madrid.es/egob/catalogo/50027-2069413-AparcamientosOcupacionYServicios.json"
+  "https://webmint.munimadrid.es/MTPAR_RSINFO/restInfoParking/listParking"
 );
 
 router.get("/update-parkings", (req, res, next) => {
@@ -76,12 +76,12 @@ router.get("/update-parkings", (req, res, next) => {
     });
 });
 
-router.get("/:id", (req, res, next) => {
-  parkingApi.getDetails(req.params.id)
-  .then(data => {
-    res.json(data.data);
-  })
-  .catch((err) => {console.log(err)})
-});
+// router.get("/:id", (req, res, next) => {
+//   parkingApi.getDetails(req.params.id)
+//   .then(data => {
+//     res.json(data.data);
+//   })
+//   .catch((err) => {console.log(err)})
+// });
 
 module.exports = router;
