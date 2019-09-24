@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const parkingSchema = new Schema(
   {
     id_ayto: Number,
+    name: String,
     comments: [{type : Schema.Types.ObjectId, ref: 'Comment'}],
     assessment: Number,
     location: { type: { type: String }, coordinates: [Number] }
