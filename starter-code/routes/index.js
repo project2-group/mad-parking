@@ -3,6 +3,7 @@ const router  = express.Router();
 
 const authRoutes = require('./auth');
 router.use('/auth', authRoutes);
+router.use('/', require('./parking.routes'));
 
 
 /* GET home page */
