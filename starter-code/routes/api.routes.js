@@ -17,7 +17,7 @@ router.get("/parkings", (req, res, next) => {
   });
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/parking/:id", (req, res, next) => {
   parkingApi.getDetails(req.params.id)
   .then(data => {
     res.json(data.data);
