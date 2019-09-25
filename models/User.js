@@ -8,7 +8,7 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)
 
 const userSchema = new Schema(
   {
-    username: { type: String, required: true, unique: true },
+    username: { type: String, unique: true },
     password: {
       type: String,
       required: true,
@@ -28,6 +28,7 @@ const userSchema = new Schema(
     },
     validationCode: { type: String, unique: true },
     active: {type: Boolean, default: false},
+    googleID: String,
     favoriteParkings: [{ type : Schema.Types.ObjectId, ref: 'Parking' }]
   },
   {
