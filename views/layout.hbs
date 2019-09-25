@@ -29,7 +29,7 @@
   <div class="main-container">
     <div class="container">
       <header class="{{dataView.header}}">
-        <h1 class="logo"><a href="{{url}}">madParking</a></h1>
+        <h1 class="logo {{#if dataView.search}}hidden{{/if}}"><a href="/">MADParking</a></h1>
         <nav>
           <a href="/">Home</a>
           <a href="/auth/login">Login</a>
@@ -38,9 +38,9 @@
         </nav>
       </header>
 
-
+   
       {{{body}}}
-
+  
     </div>
   </div>
 </body>

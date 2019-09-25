@@ -9,7 +9,8 @@ router.use('/admin', require('./admin.routes'))
 router.get('/', (req, res, next) => {
   const dataView = {
     title: 'madParking',
-    header: 'home'
+    header: 'home',
+    home: true
   }
 
   res.render('index', {dataView});

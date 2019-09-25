@@ -10,4 +10,19 @@ header.home {
   & nav {
     display: none;
   }
+
+  &.top {
+    
+    
+
+    & h1 a{
+      font-size: 40%;
+      position: absolute;
+      top: calc(-100vh + 25px);
+      left: 20px;
+      transition: top 1s cubic-bezier(0.005, 0.75, 0.005, 0.86);
+      font-weight: bold;
+    }
+
+  }
 }

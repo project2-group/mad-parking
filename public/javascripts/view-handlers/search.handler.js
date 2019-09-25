@@ -26,7 +26,29 @@ const searchView = {
       e.preventDefault();
       mapService.geolocalMap(map)
     });
+    
 
+    const mainContainer = document.querySelector('.main-container');
+
+    mainContainer.classList.add('hidden');
+
+    const header = document.querySelector('header');
+
+      setTimeout(function() {
+        
+        header.classList.add('top');
+
+        setTimeout(function() {
+          
+          document.querySelector('h1').classList.remove('hidden');
+          header.classList.add('top');
+        }, 30);
+
+
+      }, 200);
+    
+    
+    
   }
 }
 

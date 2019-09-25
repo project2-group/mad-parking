@@ -10,16 +10,24 @@ html {
   .logo a {
     text-decoration: none;
     color: #313156; }
+  .logo.hidden {
+    display: none; }
 
 .main-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; }
+  height: 100vh;
+  position: relative;
+  transition: top 1s cubic-bezier(0.705, 0.75, 0.705, 0.86);
+  top: 0; }
 
 .container {
   text-align: center; }
+
+.main-container.hidden {
+  top: calc(100vh); }
 
 header.home h1 {
   text-align: center; }
@@ -27,16 +35,24 @@ header.home h1 {
 header.home nav {
   display: none; }
 
+header.home.top h1 a {
+  font-size: 40%;
+  position: absolute;
+  top: calc(-100vh + 25px);
+  left: 20px;
+  transition: top 1s cubic-bezier(0.005, 0.75, 0.005, 0.86);
+  font-weight: bold; }
+
 .template-animated-view {
   position: absolute;
   top: 100vh;
   transition: top 0.8s cubic-bezier(0.055, 0.75, 0.055, 0.86);
   background-color: skyblue;
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 8rem);
   width: 100%; }
 
 .template-animated-view.show {
-  top: 5rem; }
+  top: 8rem; }
 
 .search div.map {
   height: 100%;
@@ -81,6 +97,8 @@ header.home nav {
   background-image: url("https://res.cloudinary.com/dctu91qjy/image/upload/v1569432952/Resources/btn_google_signin_dark_disabled_web_np7el0.png");
   background-repeat: no-repeat;
   border: 1px;
+  display: block;
+  margin: 0 auto;
   width: 191px;
   height: 46px; }
 
