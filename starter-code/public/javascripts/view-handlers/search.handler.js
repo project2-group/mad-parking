@@ -17,16 +17,16 @@ const searchView = {
   create: function () {
 
     transitionService.create(this.container, this.contain);
-    const map = mapService.init();
-
-    mapService.createInputSearch(map);
-
+    
+    mapService.createMap();
+    mapService.createInputSearch();
+    
     const ubicationButton = document.querySelector('#usar-ubicacion');
     ubicationButton.addEventListener("click", function (e) {
+      
       e.preventDefault();
-      mapService.geolocalMap(map)
+      mapService.geolocalMap()
     });
-
   }
 }
 

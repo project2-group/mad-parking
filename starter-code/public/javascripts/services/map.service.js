@@ -1,126 +1,167 @@
 const mapService = {
 
-  init: function() {
+  createMap: function() {
     const centerPoint = {
       lat: 40.4167,
       lng: -3.70325
     };
     
-    const map = new google.maps.Map(document.getElementById("map"), {
+    this.map = new google.maps.Map(document.getElementById("map"), {
       zoom: 11,
       center: centerPoint
     });
-
-    return map;
   },
 
-  geolocalMap: function(map) {
+  createInfoWindow: function() {
+    this.infoWindow = new google.maps.InfoWindow();
+  },
+  setInfoWindow: function(contain, position) {
+    this.infoWindow.setContent(contain);
+    if(position) this.infoWindow.setPosition(position);
+    
+  },
 
-  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(
-      browserHasGeolocation
-        ? "Error: The Geolocation service failed."
-        : "Error: Your browser doesn't support geolocation."
-    );
-    infoWindow.open(map);
-  }
-  
+  openInfoWindow: function(marker) {
 
-    const infoWindow = new google.maps.InfoWindow();
-  
-    // Try HTML5 geolocation.
+    if(marker) return this.infoWindow.open(this.map, marker);
+    this.infoWindow.open(this.map);
+  },
+
+  closeInfoWindow: function() {
+    this.infoWindow.close();
+  },
+
+  setMapFocus: function(zoom,position) {
+
+    if(zoom) this.map.setZoom(zoom);
+    if(position) this.map.setCenter(position);      
+  },
+
+  createMarker: function() {
+    return marker = new google.maps.Marker({
+      map: this.map,
+      anchorPoint: new google.maps.Point(0, -29)
+    });
+  },
+
+  getAddress: function(addressComponents) {
+    return [
+      (addressComponents[0] &&
+        addressComponents[0].short_name) ||
+        "",
+      (addressComponents[1] &&
+        addressComponents[1].short_name) ||
+        "",
+      (addressComponents[2] &&
+        addressComponents[2].short_name) ||
+        ""
+    ].join(" ");
+  },
+
+  geolocalMap: function() {
+    if(this.infoWindow)  {
+      this.closeInfoWindow();
+      this.infoWindow.setContent('');
+
+    }
+    this.createInfoWindow();
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function(position) {
+          
           var pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-  
-          infoWindow.setPosition(pos);
-          infoWindow.setContent("Location found.");
-          infoWindow.open(map);
-          map.setCenter(pos);
-          map.setZoom(14);
-        },
+          
+          this.setInfoWindow("Location found.", pos);
+          this.openInfoWindow();
+          this.setMapFocus(14, pos);
+          
+        }.bind(this),
+
         function() {
-          handleLocationError(true, infoWindow, map.getCenter());
-        }
+          handleLocationError(true, this.map.getCenter(), this);
+        }.bind(this)
       );
+      
     } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
+      handleLocationError(false, this.map.getCenter(),this);
+    }
+
+    function handleLocationError(browserHasGeolocation, pos, scope) {
+
+      scope.setInfoWindow(browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation.", pos
+      );
     }
   },
 
-  createInputSearch: function(map) {
+  createInputSearch: function() {
     
-  
+
     const card = document.getElementById("pac-card");
     const input = document.getElementById("pac-input");
 
-    
-
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+    this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
     const autocomplete = new google.maps.places.Autocomplete(input);
-
-
-    autocomplete.bindTo("bounds", map);
+    autocomplete.bindTo("bounds", this.map);
     autocomplete.setFields(["address_components", "geometry", "icon", "name"]);
 
-    const infowindow = new google.maps.InfoWindow();
+    if(this.infoWindow)  {
+      this.closeInfoWindow();
+      this.infoWindow.setContent('');
+    }
+    this.createInfoWindow();
+
+    let infowindowContent = document.getElementById("infowindow-content");
+    this.setInfoWindow(infowindowContent);
     
-    const infowindowContent = document.getElementById("infowindow-content");
-    infowindow.setContent(infowindowContent);
+    const marker = this.createMarker();
     
-    const marker = new google.maps.Marker({
-      map: map,
-      anchorPoint: new google.maps.Point(0, -29)
-    });
 
     autocomplete.addListener("place_changed", function() {
-      infowindow.close();
+
+    
+      this.closeInfoWindow();
+      
+      
       marker.setVisible(false);
+
       const place = autocomplete.getPlace();
       if (!place.geometry) {
-        // User entered the name of a Place that was not suggested and
-        // pressed the Enter key, or the Place Details request failed.
+        // Valida si metemos info falsa en el input
         window.alert("No details available for input: '" + place.name + "'");
         return;
       }
 
       // If the place has a geometry, then present it on a map.
       if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
+        this.map.fitBounds(place.geometry.viewport);
       } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17); 
+
+        this.setMapFocus(17, place.geometry.location)
+        
       }
+      
       marker.setPosition(place.geometry.location);
       marker.setVisible(true);
 
-      let address = "";
-      if (place.address_components) {
-        address = [
-          (place.address_components[0] &&
-            place.address_components[0].short_name) ||
-            "",
-          (place.address_components[1] &&
-            place.address_components[1].short_name) ||
-            "",
-          (place.address_components[2] &&
-            place.address_components[2].short_name) ||
-            ""
-        ].join(" ");
-      }
+
+      
+      let address = '';
+      
+      if (place.address_components) address = this.getAddress(place.address_components);
 
       infowindowContent.children["place-icon"].src = place.icon;
       infowindowContent.children["place-name"].textContent = place.name;
       infowindowContent.children["place-address"].textContent = address;
-      infowindow.open(map, marker);
-    });
+      
+      this.openInfoWindow(marker);
+    }.bind(this));
 
   }
 
