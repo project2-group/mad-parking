@@ -8,7 +8,6 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
-
 const session    = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 const flash      = require("connect-flash");
@@ -65,6 +64,7 @@ app.use(session({
 app.use(flash());
 require('./passport')(app);
     
+require('./configs/google.config')
 
 const index = require('./routes/index.routes');
 app.use('/', index);
