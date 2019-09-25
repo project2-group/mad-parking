@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     goToSearchParking("api/parkings")
       .then(responseFromAPI => {
 
+        console.log(responseFromAPI);
         searchView.create();
         window.history.pushState("", "", `/search`);
       })

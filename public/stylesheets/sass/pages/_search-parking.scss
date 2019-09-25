@@ -1,10 +1,38 @@
 .search div.map {
 
-  border: 1px solid orange;
-  height: 50%;
-  width: 100%;
-  // width: 100% !important;
-  // height: 400px !important;
+  height: 100%;
+  width: 100%;  
 }
 
 
+#pac-container {
+  position: absolute;
+  top: 2rem;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+#pac-container div {
+  position: relative;
+  border: 5px solid #aaaaaa1c;
+  width: 80%;
+  background-color: #aaaaaa1c;
+  margin: 0 auto;
+}
+#pac-container input {
+  height: 5rem;
+  width: 100%;
+  border-radius: 1rem;
+  border: 0;
+  outline: none;
+  font-size: 15px;
+  padding: 0 2rem;
+  padding-right: 5rem;
+}
+
+#pac-container a {
+  
+  position: absolute;
+  right: 3.5rem;
+  top: 1.6rem;
+}

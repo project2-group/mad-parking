@@ -26,20 +26,22 @@
 </head>
 
 <body>
-  <div class="container">
-    <header class="{{dataView.header}}">
-      <h1><a href="{{url}}">madParking</a></h1>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/auth/login">Login</a>
-        <a href="/auth/signup">Signup</a>
-        <a href="/auth/logout">Logout</a>
-      </nav>
-    </header>
+  <div class="main-container">
+    <div class="container">
+      <header class="{{dataView.header}}">
+        <h1 class="logo"><a href="{{url}}">madParking</a></h1>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/auth/login">Login</a>
+          <a href="/auth/signup">Signup</a>
+          <a href="/auth/logout">Logout</a>
+        </nav>
+      </header>
 
 
-    {{{body}}}
+      {{{body}}}
 
+    </div>
   </div>
 </body>
 

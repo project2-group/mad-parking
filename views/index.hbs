@@ -1,6 +1,16 @@
-<h2>Encuentra plaza en tu parking más cercano {{dataView.title}}</h2>
+<p class="description">Encuentra plaza en tu parking más cercano {{dataView.title}}</p>
 
-<button id="search-map">Buscar en Madrid </button>
+
+<ul class="nav-home">
+  <li><button class="search-map" id="search-map">Buscar en Madrid</button></li>
+  
+  <li><button class="social-login" id="social-login" onclick="window.open('auth/google', 
+                         'newwindow', 
+                         'width=300,height=250'); 
+              return false;"><span>Conectar con Google</span></button></li>
+  <li><span><a href="#">Login</a> / <a href="#">singup</a></span></li>
+</ul>
+
 
 <script src="/javascripts/view-handlers/home.handler.js"></script>
 
