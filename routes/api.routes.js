@@ -17,6 +17,12 @@ router.get("/parkings", (req, res, next) => {
   });
 });
 
+router.get("/parkingsForMarkers", (req, res, next) => {
+  Parking.find().then(allParkings => {
+    res.json(allParkings);
+  });
+});
+
 router.get("/parking/:id", (req, res, next) => {
   parkingApi.getDetails(req.params.id)
   .then(data => {
