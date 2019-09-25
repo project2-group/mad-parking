@@ -25,25 +25,29 @@ const mapService = {
   },
 
   drawMarkers: function(map) {
-    const contentString = "Hola";
-
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
-    axios.get("/api/parkingsForMarkers")
-    .then(({ data }) => {
+    axios.get("/api/parkingsForMarkers").then(({ data }) => {
       data.forEach(parking => {
         marker = new google.maps.Marker({
           position: {
             lat: parking.location.coordinates[1],
             lng: parking.location.coordinates[0]
           },
-          // title: parking.name,
           map
-        });
-        marker.addListener("click", function() {
-          infowindow.open(map, marker);
+        }),
+
+        marker.addListener("click", function(position) {
+          
+          infoWindow = new google.maps.InfoWindow({
+            position: new google.maps.LatLng(
+              parking.location.coordinates[1],
+              parking.location.coordinates[0]
+            ),
+            content: `parking: ${parking.location.coordinates[1]} ${parking.location.coordinates[0]}`,
+            pixelOffset: new google.maps.Size(0, -10),
+            map
+          });
+          infoWindow.setPosition(infoWindow.position);
+          infoWindow.open(map);
         });
       });
     });
