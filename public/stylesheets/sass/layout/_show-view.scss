@@ -4,7 +4,6 @@
   top: 100vh;
   transition: top .8s cubic-bezier(0.055, 0.75, 0.055, 0.86);
   background-color: skyblue;
-  border-bottom: 1px solid blue;
   height: calc(100vh - 5rem);
   width: 100%;
 
@@ -12,4 +11,6 @@
 .template-animated-view.show {
   top: 5rem; 
 }
+
+
 

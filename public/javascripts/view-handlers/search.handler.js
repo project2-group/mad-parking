@@ -4,8 +4,8 @@ const searchView = {
   contain: `<div id="map" class="map"></div>
 
     <div id="pac-container">
-      <input id="pac-input" type="text" placeholder="Enter a location">
-      <a id="usar-ubicacion" href="#">usar ubicación</a>
+      <div><input id="pac-input" type="text" placeholder="Enter a location">
+      <a id="usar-ubicacion" href="#">U</a></div>
     </div>
 
     <div id="infowindow-content">

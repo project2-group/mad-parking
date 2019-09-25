@@ -3,16 +3,22 @@ html { font-size: 10px }
 
 @import 'sass/utils/_variables.scss';
 
+
+@import 'sass/components/_logo.scss';
+
+@import 'sass/layout/_container.scss';
 @import 'sass/layout/_header.scss';
 @import 'sass/layout/_show-view.scss';
 
 @import 'sass/pages/_search-parking.scss';
+@import 'sass/pages/_home.scss';
 
 
 body { 
   font: $size-text $font-text; 
   overflow: hidden;
 }
+
 
 h2 { font-size: $size-h2 }
 

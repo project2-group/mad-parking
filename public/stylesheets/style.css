@@ -4,19 +4,34 @@ html {
 * {
   box-sizing: border-box; }
 
-header.home {
-  border: 1px solid red; }
-  header.home h1 {
-    text-align: center; }
-  header.home nav {
-    display: none; }
+.logo {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 6rem; }
+  .logo a {
+    text-decoration: none;
+    color: #313156; }
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; }
+
+.container {
+  text-align: center; }
+
+header.home h1 {
+  text-align: center; }
+
+header.home nav {
+  display: none; }
 
 .template-animated-view {
   position: absolute;
   top: 100vh;
   transition: top 0.8s cubic-bezier(0.055, 0.75, 0.055, 0.86);
   background-color: skyblue;
-  border-bottom: 1px solid blue;
   height: calc(100vh - 5rem);
   width: 100%; }
 
@@ -24,12 +39,86 @@ header.home {
   top: 5rem; }
 
 .search div.map {
-  border: 1px solid orange;
-  height: 50%;
+  height: 100%;
   width: 100%; }
 
+#pac-container {
+  position: absolute;
+  top: 2rem;
+  width: 100%;
+  text-align: center;
+  z-index: 1; }
+
+#pac-container div {
+  position: relative;
+  border: 5px solid #aaaaaa1c;
+  width: 80%;
+  background-color: #aaaaaa1c;
+  margin: 0 auto; }
+
+#pac-container input {
+  height: 5rem;
+  width: 100%;
+  border-radius: 1rem;
+  border: 0;
+  outline: none;
+  font-size: 15px;
+  padding: 0 2rem;
+  padding-right: 5rem; }
+
+#pac-container a {
+  position: absolute;
+  right: 3.5rem;
+  top: 1.6rem; }
+
+.description {
+  font-size: 5rem;
+  padding: 3rem 1rem;
+  color: #272c34;
+  text-align: center; }
+
+.social-login {
+  background-image: url("https://res.cloudinary.com/dctu91qjy/image/upload/v1569432952/Resources/btn_google_signin_dark_disabled_web_np7el0.png");
+  background-repeat: no-repeat;
+  border: 1px;
+  width: 191px;
+  height: 46px; }
+
+.social-login span {
+  display: none; }
+
+.search-map {
+  color: #fff;
+  background-color: #2fbc71;
+  width: 90%;
+  padding: 1rem 3rem;
+  border-radius: 1rem;
+  font-size: 2rem; }
+
+.search-map, .social-login {
+  outline: none;
+  cursor: pointer;
+  border: 0px; }
+
+.nav-home {
+  width: 25rem;
+  margin: 0 auto; }
+  .nav-home li {
+    text-align: center; }
+    .nav-home li:nth-child(2) {
+      margin-top: 3rem;
+      text-align: center; }
+    .nav-home li:last-child {
+      margin-top: 1rem;
+      text-align: center; }
+      .nav-home li:last-child span {
+        position: relative;
+        left: 41px; }
+      .nav-home li:last-child a {
+        color: #313156; }
+
 body {
-  font: 1.6rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1.6rem Helvetica, Arial, sans-serif;
   overflow: hidden; }
 
 h2 {
