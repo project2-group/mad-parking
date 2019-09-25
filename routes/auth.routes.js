@@ -6,7 +6,7 @@ const upload = require("./../configs/cloudinary.config");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const access = require("./../middlewares/access.mid");
-
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
@@ -30,6 +30,23 @@ router.post(
     failureRedirect: "/auth/login",
     failureFlash: true,
     passReqToCallback: true
+  })
+);
+
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  })
+);
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/",
+    failureRedirect: "/signup" 
   })
 );
 

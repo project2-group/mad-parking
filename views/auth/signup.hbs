@@ -29,6 +29,9 @@
   <br><br>
 
   <button>Create account</button>
+{{#unless user}}
+<a href="/auth/google/">Sign up with Google</a>
+{{/unless}}
 
   <p class="account-message">
     Do you already have an account?
