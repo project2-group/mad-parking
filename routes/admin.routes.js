@@ -6,6 +6,9 @@ const Parking = require("../models/Parking");
 const parkingApi = new ParkingApi(
   "https://webmint.munimadrid.es/MTPAR_RSINFO/restInfoParking/listParking"
 );
+const parkingDetailsApi = new ParkingApi(
+  "https://datos.madrid.es/egob/catalogo/50027-2069413-AparcamientosOcupacionYServicios.json"
+);
 
 router.get("/update-parkings", (req, res, next) => {
   parkingApi
@@ -33,7 +36,7 @@ router.get("/update-parkings", (req, res, next) => {
                     type: "Point",
                     coordinates: [element.longitude, element.latitude]
                   },
-                  name: element.name
+                  nickName: element.name
                 }
               },
               { new: true }
@@ -62,7 +65,7 @@ router.get("/update-parkings", (req, res, next) => {
                 type: "Point",
                 coordinates: [element.longitude, element.latitude]
               },
-              name: element.name
+              nickName: element.name
             });
           }
         });
@@ -70,6 +73,87 @@ router.get("/update-parkings", (req, res, next) => {
     })
     .then(() => {
       res.redirect("/");
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+router.get("/update-parkingDetails", (req, res, next) => {
+  Parking.find()
+    .then(allParkings => {
+      allParkings.forEach(element => {
+        console.log(element.id_ayto);
+        parkingDetailsApi
+          .getDetails(element.id_ayto)
+          .then(details => {
+            //Insert data validations for model
+            Parking.findOneAndUpdate(
+              { id_ayto: details.id_ayto },
+              {
+                $set: {
+                  contact: {
+                    address: {
+                      address: String,
+                      areaCode: String,
+                      town: String
+                    },
+                    phone: {type: Number},
+                    email: {type: String, match: [EMAIL_PATTERN, "this is not a correct email"]},
+                    web: {type: String}
+                  },
+                  accesses: [{
+                    address: String,
+                    location: { type: { type: String }, coordinates: [Number] }
+                  }],
+                  schedule: String,
+                  rates: [{
+                    description: String,
+                    rate: Number
+                  }],
+                  parkingType: [{
+                    name: String,
+                    content: String
+                  }],
+                  accessType: [{
+                    name: String,
+                    content: String
+                  }],
+                  paymentType: [{
+                    name: String,
+                    content: String
+                  }],
+                  additionalServices: [{
+                    name: String,
+                    content: String
+                  }],
+                  information: [{
+                    name: String,
+                    content: String
+                  }]
+
+
+
+
+
+
+
+
+
+
+                }
+              },
+              { new: true }
+            )
+              .then(updatedParking => {
+                return;
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          })
+          .catch(err => console.log(err));
+      });
     })
     .catch(err => {
       console.log(err);
