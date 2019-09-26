@@ -230,6 +230,7 @@ router.get("/update-parkingDetails", (req, res, next) => {
     .then(done => {
       res.redirect('/')
     })
+    .catch((err) => console.log(err))
 });
 
 module.exports = router;
