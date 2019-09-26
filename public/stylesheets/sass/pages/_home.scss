@@ -1,27 +1,15 @@
 .description {
   font-size: $size-h2;
   padding: 3rem 1rem;
-  color: $super-dark-blue;
+  color: $blue;
   text-align: center;
-}
-
-.social-login {
-  background-image: url('https://res.cloudinary.com/dctu91qjy/image/upload/v1569432952/Resources/btn_google_signin_dark_disabled_web_np7el0.png');
-  background-repeat: no-repeat;
-  border: 1px;
-  display: block;
-  margin: 0 auto;
-  width: 191px;
-  height: 46px;
-  
-}
-.social-login span {
-  display: none;
+  background-color: $yellow;
+  margin: 2rem 0;
 }
 
 .search-map {
   color: #fff;
-  background-color: rgba(47, 188, 113, 1);
+  background-color: $light-green;
   width: 90%;
   padding: 1rem 3rem;
   border-radius: 1rem;

@@ -14,9 +14,9 @@
 }
 #pac-container div {
   position: relative;
-  border: 5px solid #aaaaaa1c;
+  border: 5px solid #F3FFBD2c;
   width: 80%;
-  background-color: #aaaaaa1c;
+  background-color: #F3FFBD2c;
   margin: 0 auto;
 }
 #pac-container input {
@@ -27,12 +27,36 @@
   outline: none;
   font-size: 15px;
   padding: 0 2rem;
-  padding-right: 5rem;
+  padding-right: 8rem;
+  color: $blue;
+  background-color: #Ffffffdd;
+  transition: background-color .4s cubic-bezier(0.705, 0.75, 0.705, 0.86);
+  cursor: pointer;
 }
 
-#pac-container a {
-  
+#pac-container a, #btn-search {
+  text-decoration: none;
   position: absolute;
-  right: 3.5rem;
+  font-size: 2rem;
+ 
+}
+
+#usar-ubicacion {
+  
+  right: 5.5rem;
   top: 1.6rem;
+  color: $blue;
+
+}
+
+#btn-search {
+  right: 2rem;
+  top: 1.6rem;
+  color: $dark-blue;
+}
+
+#pac-container input:focus {
+  
+  background-color: #Ffffff;
+
 }

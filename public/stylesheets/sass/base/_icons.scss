@@ -1,0 +1,151 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?ny535k');
+  src:  url('../fonts/icomoon.eot?ny535k#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?ny535k') format('truetype'),
+    url('../fonts/icomoon.woff?ny535k') format('woff'),
+    url('../fonts/icomoon.svg?ny535k#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-fav-collection:before {
+  content: "\e900";
+}
+.icon-fav-collection2:before {
+  content: "\e901";
+}
+.icon-car:before {
+  content: "\e902";
+}
+.icon-motorbike:before {
+  content: "\e903";
+}
+.icon-logo:before {
+  content: "\e904";
+  
+}
+.icon-elevator:before {
+  content: "\e905";
+}
+.icon-warning:before {
+  content: "\e906";
+}
+.icon-battery:before {
+  content: "\e907";
+}
+.icon-edit:before {
+  content: "\e908";
+}
+.icon-heart-outlined:before {
+  content: "\e909";
+}
+.icon-heart:before {
+  content: "\e90a";
+}
+.icon-key:before {
+  content: "\e90b";
+}
+.icon-login:before {
+  content: "\e90c";
+}
+.icon-close2:before {
+  content: "\e90d";
+}
+.icon-close-solid:before {
+  content: "\e90e";
+}
+.icon-wc:before {
+  content: "\e90f";
+}
+.icon-directions_bike:before {
+  content: "\e910";
+}
+.icon-location:before {
+  content: "\e911";
+}
+.icon-pencil:before {
+  content: "\e912";
+}
+.icon-profile:before {
+  content: "\e923";
+}
+.icon-coin-euro:before {
+  content: "\e93c";
+}
+.icon-credit-card:before {
+  content: "\e93f";
+}
+.icon-location1:before {
+  content: "\e947";
+}
+.icon-user:before {
+  content: "\e971";
+}
+.icon-search:before {
+  content: "\e986";
+}
+.icon-power:before {
+  content: "\e9b5";
+}
+.icon-clipboard:before {
+  content: "\e9b8";
+}
+.icon-happy2:before {
+  content: "\e9e0";
+}
+.icon-smile2:before {
+  content: "\e9e2";
+}
+.icon-sad2:before {
+  content: "\e9e6";
+}
+.icon-angry2:before {
+  content: "\e9ee";
+}
+.icon-cross:before {
+  content: "\ea0f";
+}
+.icon-checkmark:before {
+  content: "\ea10";
+}
+.icon-exit:before {
+  content: "\ea14";
+}
+.icon-share2:before {
+  content: "\ea82";
+}
+.icon-drivers-license:before {
+  content: "\e913";
+}
+.icon-id-card:before {
+  content: "\e913";
+}
+.icon-star-half:before {
+  content: "\e914";
+}
+.icon-star:before {
+  content: "\e915";
+}
+.icon-wheelchair:before {
+  content: "\e916";
+}
+.icon-user-circle-o:before {
+  content: "\e917";
+}

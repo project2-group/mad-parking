@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  if(document.getElementById("search-map")) {
   const goToSearchParking = (route) => restAppApi.get(route);
 
   document.getElementById("search-map").onclick = () => {
@@ -12,4 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(err => console.log("Error is: ", err));
   };
+}
 }, false);

@@ -1,0 +1,17 @@
+.pop-up {
+  position: absolute;
+  top: 100vh;
+  left: calc(50vw - 150px);
+  background-color: #F3FFBDf0;
+  border: 10px solid #70C1B322;
+  border-radius: 10px;
+  height: 410px;
+  width: 300px;
+  transition: top .4s cubic-bezier(0.005, 0.75, 0.005, 0.75);
+  padding: 1rem 2rem;
+  text-align: left;
+
+  &.show {
+    top: calc(50vh - 205px);
+  }
+}
