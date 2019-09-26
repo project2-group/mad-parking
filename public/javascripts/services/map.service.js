@@ -27,28 +27,27 @@ const mapService = {
   drawMarkers: function(map) {
     axios.get("/api/parkingsForMarkers").then(({ data }) => {
       data.forEach(parking => {
-        marker = new google.maps.Marker({
+        (marker = new google.maps.Marker({
           position: {
             lat: parking.location.coordinates[1],
             lng: parking.location.coordinates[0]
           },
+          icon: `../../images/parking.png`,
           map
-        }),
-
-        marker.addListener("click", function(position) {
-          
-          infoWindow = new google.maps.InfoWindow({
-            position: new google.maps.LatLng(
-              parking.location.coordinates[1],
-              parking.location.coordinates[0]
-            ),
-            content: `parking: ${parking.location.coordinates[1]} ${parking.location.coordinates[0]}`,
-            pixelOffset: new google.maps.Size(0, -10),
-            map
+        })),
+          marker.addListener("click", function(position) {
+            infoWindow = new google.maps.InfoWindow({
+              position: new google.maps.LatLng(
+                parking.location.coordinates[1],
+                parking.location.coordinates[0]
+              ),
+              content: `<div> Parking ${parking.name} </div> <a href="http://localhost:3000/search/${parking.id_ayto}">Más información</a>`,
+              pixelOffset: new google.maps.Size(0, -10),
+              map
+            });
+            infoWindow.setPosition(infoWindow.position);
+            infoWindow.open(map);
           });
-          infoWindow.setPosition(infoWindow.position);
-          infoWindow.open(map);
-        });
       });
     });
   },
@@ -74,10 +73,16 @@ const mapService = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
+          const marker = new google.maps.Marker({
+            map,
+            anchorPoint: new google.maps.Point(0, -29),
+            icon: `../../images/car.png`
+          });
 
           infoWindow.setPosition(pos);
-          infoWindow.setContent("Location found.");
-          infoWindow.open(map);
+          infoWindow.setContent("Estás aquí");
+          infoWindow.open(map, marker);
+          marker.setVisible(true);
           map.setCenter(pos);
           map.setZoom(14);
         },
@@ -89,6 +94,8 @@ const mapService = {
       // Browser doesn't support Geolocation
       handleLocationError(false, infoWindow, map.getCenter());
     }
+
+    mapService.drawMarkers(map);
   },
 
   createInputSearch: function(map) {
@@ -114,7 +121,8 @@ const mapService = {
 
     const marker = new google.maps.Marker({
       map: map,
-      anchorPoint: new google.maps.Point(0, -29)
+      anchorPoint: new google.maps.Point(0, -29),
+      icon: `../../images/car.png`
     });
 
     autocomplete.addListener("place_changed", function() {
@@ -157,6 +165,7 @@ const mapService = {
       infowindowContent.children["place-name"].textContent = place.name;
       infowindowContent.children["place-address"].textContent = address;
       infowindow.open(map, marker);
+      mapService.drawMarkers(map);
     });
   }
 };

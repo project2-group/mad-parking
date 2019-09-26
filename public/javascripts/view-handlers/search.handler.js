@@ -19,16 +19,13 @@ const searchView = {
     transitionService.create(this.container, this.contain);
     const map = mapService.init();
     
-    mapService.drawMarkers(map);
-
     mapService.createInputSearch(map);
 
     const ubicationButton = document.querySelector('#usar-ubicacion');
     ubicationButton.addEventListener("click", function (e) {
       e.preventDefault();
-      mapService.geolocalMap(map)
+      mapService.geolocalMap(map);
     });
-
   }
 }
 
