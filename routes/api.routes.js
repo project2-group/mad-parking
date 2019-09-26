@@ -28,26 +28,20 @@ router.get("/parkingsForMarkers", (req, res, next) => {
 });
 
 router.get("/parking/:id", (req, res, next) => {
-
   updateFreeSpots();
   Parking.find({ id_ayto: req.params.id })
-    .populate({ path: "comments", populate: { path: "authorId" } })
-
+  .populate({ path: "comments", populate: { path: "authorID" } })
     .then(data => {
       res.json(data);
     })
     .catch(err => {
       console.log(err);
     });
-
- });
-
-
-
+});
 
 router.get("/parking/add-review/:id", (req, res, next) => {
   Parking.find({ id_ayto: req.params.id })
-    // .populate({ path: "comments", populate: { path: "authorId" } })
+    .populate({ path: "comments", populate: { path: "authorID" } })
     .then(data => {
       const dataView = {
         title: "madParking - Buscador de plazas de aparcamiento",
@@ -60,25 +54,28 @@ router.get("/parking/add-review/:id", (req, res, next) => {
     });
 });
 
-//PENDIENTE DE ARREGLAR
-// router.post("/parking/add-review", (req, res, next) => {
-//   const { text, assessment, id } = req.body;
-//   const newComment = new Comment({
-//     authorID: req.user.id,
-//     text,
-//     assessment
-//   });
-//   newComment
-//     .save()
-//     .then(comment => {
-//       Parking.findById(id)
-//         .then(parkingFound => {
-//           parkingFound.comments.push(comment.id);
-//         })
-//         .catch(err => console.log(err));
-//     })
-//     .catch(err => console.log(err));
-// });
+
+router.post("/parking/add-review", (req, res, next) => {
+  const { text, assessment, id } = req.body;
+  const newComment = new Comment({
+    authorID: req.user.id,
+    text,
+    assessment
+  });
+  newComment
+    .save()
+    .then(comment => {
+      Parking.findOne({_id: id}).then((parkingWithComment) => {
+        parkingWithComment.update( { $push: { comments: comment._id, assessment: comment.assessment } }, {new:true})
+        .then((commentAdded) => {
+          res.redirect(`/api/parking/${parkingWithComment.id_ayto}`);
+        })
+        .catch(err => console.log(err));
+      })
+      
+    })
+    .catch(err => console.log(err));
+});
 
 function updateFreeSpots() {
   Parking.updateMany(
@@ -120,5 +117,6 @@ function updateFreeSpots() {
     })
     .catch(err => console.log(err.code));
 }
+
 
 module.exports = router;

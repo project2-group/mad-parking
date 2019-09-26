@@ -6,7 +6,8 @@ const parkingSchema = new Schema(
     id_ayto: Number,
     nickName: String,
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-    assessment: Number,
+    assessment: [{ type: Number }],
+    assessmentAverage: {type: Number, default: 0},
     location: { type: { type: String }, coordinates: [Number] },
     address: {
       address: String,
@@ -59,12 +60,6 @@ const parkingSchema = new Schema(
     timestamps: true
   }
 );
-parkingSchema.methods.getAssesment = function(comments) {
-  let output =
-    comments.reduce((ac, cu) => ac + +cu.assessment, 0) / comments.length;
-  let average = +output.toFixed(1);
-  return average;
-};
 
 const Parking = mongoose.model("Parking", parkingSchema);
 module.exports = Parking;
