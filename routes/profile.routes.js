@@ -8,8 +8,6 @@ router.get("/", checkLogin, (req, res) => {
   res.render("");
 })
 
-
-
 router.get("/update/:id", [checkLogin, upload.single("userPhoto")], (req, res) => {
   let picName = req.file.originalname;
   let url = req.file.url;
