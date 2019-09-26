@@ -161,9 +161,6 @@ router.get("/update-parkingDetails", (req, res, next) => {
                   minutesStayEnd: minutesStayEnd
                 });
               });
-
-              // console.log(data.lstFeatures)
-              // console.log("---------------------------");
             }
             if (data.lstFeatures) {
               data.lstFeatures.forEach(element => {
