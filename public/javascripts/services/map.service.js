@@ -26,6 +26,22 @@ const mapService = {
 
   drawMarkers: function(map) {
     axios.get("/api/parkingsForMarkers").then(({ data }) => {
+
+      var iconBase =
+        "https://res.cloudinary.com/dctu91qjy/image/upload/v1569491227/Resources/";
+
+      var icons = {
+        parking: {
+          icon: iconBase + "parking_lot_maps.png"
+        },
+        library: {
+          icon: iconBase + "library_maps.png"
+        },
+        info: {
+          icon: iconBase + "info-i_maps.png"
+        }
+      };
+
       data.forEach(parking => {
         (marker = new google.maps.Marker({
           position: {
@@ -36,7 +52,6 @@ const mapService = {
           map
         })),
           marker.addListener("click", function(position) {
-            
             infoWindow = new google.maps.InfoWindow({
               position: new google.maps.LatLng(
                 parking.location.coordinates[1],
@@ -46,13 +61,11 @@ const mapService = {
               pixelOffset: new google.maps.Size(0, -10),
               map
             });
-            
 
             infoWindow.setPosition(infoWindow.position);
             infoWindow.open(map);
             map.setCenter(infoWindow.position);
             map.setZoom(14);
-          
           });
       });
     });
