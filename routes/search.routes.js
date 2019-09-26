@@ -3,8 +3,9 @@ const Parking = require("../models/Parking");
 const axios = require("axios");
 const router = express.Router();
 const access = require("./../middlewares/access.mid");
-const Parking = require("./../models/Parking");
+
 const Comment = require("./../models/Comment");
+
 
 router.get('/', (req, res, next) => {
   const dataView = {
@@ -12,7 +13,6 @@ router.get('/', (req, res, next) => {
     header: 'home',
     search: true
   }
-  
   res.render('index', {dataView, user: req.user});
 });
 
@@ -24,6 +24,7 @@ router.get('/', (req, res, next) => {
 //     details: true,
 //     parking: req.params.id
 //   }
+
 
 //   res.render('index', {dataView});
 // });

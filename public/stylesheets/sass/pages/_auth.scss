@@ -1,20 +1,23 @@
 .signFormBox {
   width: 380px;
   left: calc(50vw - 190px);
-
-  
 }
 
-.pop-up {
-   & h2 {
-     font-size: 2rem;
-     color: $super-dark-blue;
-     text-transform: uppercase;
-     margin-bottom: 1.5rem;
-   }
 
-   & p {
-     margin-top: 2rem;
-     text-align: center;
-   }
+h2.auth {
+  font-size: 2rem;
+  color: $super-dark-blue;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-style: italic;
+}
+
+label {
+  text-align: left;
+}
+
+p {
+  margin-top: 2rem;
+  text-align: center;
 }
