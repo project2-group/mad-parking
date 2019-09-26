@@ -9,8 +9,69 @@ header.home {
 
   & nav {
     display: none;
+    position: fixed;
+    top: 80px;
+    right: -189px;
+    padding: 2rem 2rem;
+    transition: .25s cubic-bezier(0.705, 0.05, 0.705, 0.86);
+    display: flex;
+    flex-direction: column;
+    width: 189px;
+    z-index: 5;
+    background-color: #ffffff;
+    text-align: left;
+    border-bottom: 2px solid $green;
+    border-left: 2px solid $green;
+    border-bottom-left-radius: 2rem;
+    
+
+    & a {
+      text-decoration: none;
+      margin-bottom: 1.3rem;
+      font-weight: bold;
+      color: $dark-blue;
+      text-transform: uppercase;
+      
+      & span {
+        font-size: 120%;
+        position: relative;
+        top: 2px;
+      }
+    }
+
+    & a:hover {
+      color: $blue;
+    }
+    & a:last-child {
+      margin-bottom: 0;
+    }
+    &.active {
+      background-color: $yellow;
+    }
+    &.show {
+      right: 0;
+
+    }
   }
 
+  .icon-exit {
+    position: relative;
+    top: 3.5px;
+    
+  }
+  .icon-heart {
+    
+    font-size: 140%;
+    position: relative;
+    left: 1px;
+    top: 4px;
+    
+  }
+
+  .btn-favorites {
+    position: relative;
+    right: 4px;
+  }
   &.top {
     
     
@@ -24,5 +85,32 @@ header.home {
       font-weight: bold;
     }
 
+  }
+}
+
+.user-area {
+  display: none;
+  position: absolute;
+  top: calc(-100vh + 22px);
+  right: -18px;
+  text-decoration: none;
+  font-size: 2.6rem;
+  color: $dark-blue;
+  transition: color .5s cubic-bezier(0.005, 0.75, 0.005, 0.36);
+
+  &:hover, &.active {
+    color: $green;
+  }
+  & span {
+    position: relative;
+    top: -38px;
+    display: block;
+    width: 400px;
+    right: 150px;
+    padding: 40px 0;
+  }
+  &.show {
+    display: block;
+    width: 100px;
   }
 }

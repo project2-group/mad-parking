@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
     home: true
   }
 
-  res.render('index', {dataView});
+  res.render('index', {dataView, user: req.user});
 });
 
 module.exports = router;

@@ -1,13 +1,16 @@
 
 {{#if dataView.home}}
-<p class="description">Encuentra plaza en tu parking más cercano {{dataView.title}}</p>
+<p class="description">Encuentra plaza en tu parking más cercano</p>
 
 
 <ul class="nav-home">
   <li><button class="search-map" id="search-map">Buscar en Madrid</button></li>
+  {{#unless user}}
   
-  <li><a class="social-login" id="social-login" href="auth/google"><span>Conectar con Google</span></a></li>
-  <li><span><a href="#">Login</a> / <a href="#">signup</a></span></li>
+
+    <li><a class="social-login" id="social-login" href="/auth/google/"><span>Conectar con Google</span></a></li>
+    <li><span><a class="loginBtn" href="#">Login</a> / <a class="signBtn" href="#">signup</a></span></li>
+  {{/unless}}
 </ul>
 {{/if}}
 

@@ -4,8 +4,8 @@ const searchView = {
   contain: `<div id="map" class="map"></div>
 
     <div id="pac-container">
-      <div><input id="pac-input" type="text" placeholder="Enter a location">
-      <a id="usar-ubicacion" href="#">U</a></div>
+      <div><input id="pac-input" type="text" placeholder="Selecciona tu ubicación">
+      <a id="usar-ubicacion" href="#"><span class="icon-location"></span></a><span id="btn-search" class="icon-search"></span></div>
     </div>
 
     <div id="infowindow-content">
@@ -42,10 +42,12 @@ const searchView = {
           
           document.querySelector('h1').classList.remove('hidden');
           header.classList.add('top');
+
+          document.querySelector('.user-area').classList.add('show');
         }, 30);
 
 
-      }, 200);
+      }, 30);
     
     
     
