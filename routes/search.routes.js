@@ -17,12 +17,15 @@ router.get('/', (req, res, next) => {
 
 // router.get('/:id/details', (req, res, next) => {
 
+
+
 //   const dataView = {
 //     title: 'madParking - Plazas de aparcamiento',
 //     header: 'home',
 //     details: true,
 //     parking: req.params.id
 //   }
+
 
 
 //   res.render('index', {dataView});

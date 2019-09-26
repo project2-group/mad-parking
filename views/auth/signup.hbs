@@ -9,12 +9,12 @@
   </div>
 
   <div class="form-field">
-    <label for="username">Username</label>
+    <label for="username">Usuario</label>
     <input id="username" type="text" name="username" placeholder="Username">
   </div>
 
   <div class="form-field">
-    <label for="user-photo">Photo</label>
+    <label for="user-photo">Foto</label>
     <input type="file" name="userPhoto" id="user-photo">
   </div>
 
@@ -33,11 +33,11 @@
 
   <br><br><br>
   {{#unless user}}
-    <a class="social-login" href="/auth/google/"><span>Sign up with Google</span></a>
+    <a class="social-login" href="/auth/google/"><span>Conecta con Google</span></a>
   {{/unless}}
  
   <p class="account-message">
-    Do you already have an account?
+    ¿Ya tienes cuenta?
     <a href="/auth/login">Login</a>
   </p>
 </form>

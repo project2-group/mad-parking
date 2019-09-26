@@ -28,16 +28,22 @@ router.get("/parkingsForMarkers", (req, res, next) => {
 });
 
 router.get("/parking/:id", (req, res, next) => {
+
   updateFreeSpots();
   Parking.find({ id_ayto: req.params.id })
     .populate({ path: "comments", populate: { path: "authorId" } })
+
     .then(data => {
       res.json(data);
     })
     .catch(err => {
       console.log(err);
     });
-});
+
+ });
+
+
+
 
 router.get("/parking/add-review/:id", (req, res, next) => {
   Parking.find({ id_ayto: req.params.id })

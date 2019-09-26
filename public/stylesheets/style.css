@@ -198,6 +198,7 @@ html {
   float: right;
   font-size: 90%;
   text-transform: uppercase;
+  outline: none;
   cursor: pointer; }
   .btn-form:hover {
     background-color: #247BA0;
@@ -240,6 +241,16 @@ label {
 
 .main-container.hidden {
   top: calc(100vh); }
+
+.detailsBox {
+  position: absolute;
+  top: 100vh;
+  width: 100%;
+  height: calc(50vh);
+  background-color: #fff;
+  transition: top 0.8s cubic-bezier(0.0705, 0.775, 0.005, 0.786); }
+  .detailsBox.show {
+    top: 50vh; }
 
 header.home h1 {
   text-align: center; }

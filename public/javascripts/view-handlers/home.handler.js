@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         searchView.create();
         window.history.pushState("", "", `/search`);
+
+        
       })
       .catch(err => console.log("Error is: ", err));
   };
