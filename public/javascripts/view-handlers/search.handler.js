@@ -26,8 +26,6 @@ const searchView = {
       e.preventDefault();
       mapService.geolocalMap(map);
     });
-<<<<<<< HEAD
-=======
     
 
     const mainContainer = document.querySelector('.main-container');
@@ -53,7 +51,6 @@ const searchView = {
     
     
     
->>>>>>> 53eae12f607b08ae84b1ec53d7d036f7ec4a0a92
   }
 }
 
