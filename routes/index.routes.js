@@ -5,6 +5,7 @@ router.use('/auth', require('./auth.routes'));
 router.use('/search', require('./search.routes'));
 router.use('/api', require('./api.routes'));
 router.use('/admin', require('./admin.routes'))
+router.use('/profile', require('./profile.routes'))
 
 router.get('/', (req, res, next) => {
   const dataView = {
