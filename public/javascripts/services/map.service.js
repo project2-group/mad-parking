@@ -1,4 +1,8 @@
-const mapService = {
+
+
+const mapService = { 
+
+  
   init: function() {
     const centerPoint = {
       lat: 40.4167,
@@ -36,17 +40,30 @@ const mapService = {
           map
         })),
           marker.addListener("click", function(position) {
+
+            
+
+
             infoWindow = new google.maps.InfoWindow({
               position: new google.maps.LatLng(
                 parking.location.coordinates[1],
                 parking.location.coordinates[0]
               ),
-              content: `<div> Parking ${parking.name} </div> <a href="http://localhost:3000/search/${parking.id_ayto}">Más información</a>`,
+              content: `<div> <a id="${parking.id_ayto}" data-id="${parking.id_ayto}" class="load-details" href="#">${parking.nickName} </a></div> <a data-id="${parking.id_ayto}" href="#">Más información</a>`,
               pixelOffset: new google.maps.Size(0, -10),
               map
             });
             infoWindow.setPosition(infoWindow.position);
+
+
+            showDetails(parking.id_ayto, this.user);
+
             infoWindow.open(map);
+
+
+            
+            
+            
           });
       });
     });
@@ -169,3 +186,90 @@ const mapService = {
     });
   }
 };
+
+
+function setUser(userX) {
+  
+  user = userX;
+}
+
+
+function showDetails(id, user) {
+
+  setTimeout(() => {
+    
+    const title = document.getElementById(id);
+    
+    title.addEventListener('click', function(e, user) {
+      const goToSearchParking = (route) => restAppApi.get(route);
+  
+      
+
+    goToSearchParking('api/parking/' + id)
+        .then(responseFromAPI => {
+  
+          
+          if(document.querySelector('.detailsBox')) {
+            
+            document.querySelector('.detailsBox').remove();
+
+          }
+
+            const body = document.querySelector('body');
+
+            const newDiv = document.createElement('div');
+            newDiv.classList.add('detailsBox');
+            console.log(responseFromAPI);
+           
+            console.log(user);
+            let button = (user) ? `<a href="#">Añadir reseña</a>` : `<a href="auth/login">Necesario login</a>`;
+              
+            
+
+            
+            
+            content = 
+            `
+              <div class="container-details">
+                <div class="top-details">
+                  <h3>${responseFromAPI.data[0].nickName}</h3>
+                  <a target="_blank" href="https://www.google.com/maps/dir/${responseFromAPI.data[0].location.coordinates[1]},${responseFromAPI.data[0].location.coordinates[0]}/">Como llegar</a>
+                  <h4>SERVICIOS</h4>
+
+                  <h4>PLAZAS</h4>
+
+
+                  <h4>TARIFAS</h4>
+                </div>
+
+                <div class="bottom-details>
+                <h4>RESEÑAS</h4>
+                ${button}
+                </div>
+              </div>
+            `;
+
+            newDiv.innerHTML = content;
+
+            setTimeout(() => {
+              newDiv.classList.add('show');
+            }, 300);
+            body.appendChild(newDiv);
+         
+
+          
+        })
+        .catch(err => console.log("Error is: ", err));
+    });
+
+
+  }, 1000);
+ 
+    
+
+
+
+  
+
+  
+}

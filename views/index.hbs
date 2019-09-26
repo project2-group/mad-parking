@@ -21,6 +21,20 @@
 
 {{#if dataView.search}}
   <script>
+
+    
     searchView.create();
+    
+   
+
+      
+    
+  </script>
+  {{/if}}
+{{#if user}}
+  <script>
+    
+    setUser(`{{user}}`);
+
   </script>
 {{/if}}

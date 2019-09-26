@@ -25,6 +25,7 @@ router.get('/:id/details', (req, res, next) => {
     title: 'madParking - Plazas de aparcamiento',
     header: 'home',
     details: true,
+    search: true,
     parking: req.params.id
   }
 

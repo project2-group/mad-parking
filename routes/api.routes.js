@@ -24,11 +24,13 @@ router.get("/parkingsForMarkers", (req, res, next) => {
 });
 
 router.get("/parking/:id", (req, res, next) => {
-  parkingApi.getDetails(req.params.id)
-  .then(data => {
-    res.json(data.data);
-  })
-  .catch((err) => {console.log(err)})
-});
+  Parking.find({ id_ayto: req.params.id })
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+ });
 
 module.exports = router;

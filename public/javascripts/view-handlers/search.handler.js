@@ -5,7 +5,7 @@ const searchView = {
 
     <div id="pac-container">
       <div><input id="pac-input" type="text" placeholder="Selecciona tu ubicación">
-      <a id="usar-ubicacion" href="#"><span class="icon-location"></span></a><span id="btn-search" class="icon-search"></span></div>
+      <a id="usar-ubicacion" href="#"><span class="icon-location" title="Detectar ubicación"></span></a><span id="btn-search" class="icon-search"></span></div>
     </div>
 
     <div id="infowindow-content">
@@ -27,6 +27,9 @@ const searchView = {
       mapService.geolocalMap(map);
     });
     
+
+
+
 
     const mainContainer = document.querySelector('.main-container');
 
@@ -53,5 +56,6 @@ const searchView = {
     
   }
 }
+
 
 
