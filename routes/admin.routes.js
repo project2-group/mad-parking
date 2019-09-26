@@ -83,17 +83,35 @@ router.get("/update-parkingDetails", (req, res, next) => {
     .then(allParkings => {
       allParkings.forEach(element => {
         parkingDetailsApi
-        .getDetails(element.id_ayto)
-        .then(details => {
+          .getDetails(element.id_ayto)
+          .then(details => {
             let data = details.data;
             let updatedAddress;
             let updatedAccesses = [];
             let updatedRates = [];
-            let updatedparkingTypes = [];
-            let updatedAccessType = [];
-            let updatedPaymentType = [];
-            let updatedAdditionalServices = [];
-            let updatedInformation = [];
+            let updatedparkingTypes = {
+              total: undefined,
+              pmr: false,
+              electric: false,
+              motorbike: false,
+              bike: false
+            };
+            let updatedPaymentType = {
+              cash: false,
+              card: false,
+              mobile: false
+            };
+            let updatedAdditionalServices = {
+              bathroom: false,
+              adaptedBathroom: false,
+              elevator: false,
+              automatedPayment: false,
+              cashier: false,
+              camera: false,
+              info: false,
+              carWash: false
+            };
+            let updatedmaxHeight;
             if (data.general) {
               let newAddress;
               let newAreaCode;
@@ -165,69 +183,136 @@ router.get("/update-parkingDetails", (req, res, next) => {
             if (data.lstFeatures) {
               data.lstFeatures.forEach(element => {
                 if (element.nameField === "Tipo plaza") {
-                  let name = element.name;
-                  let content = element.content;
-                  updatedparkingTypes.push({ name: name, content: content });
+                  switch (element.name) {
+                    case "Total":
+                      updatedparkingTypes.total = element.content;
+                      break;
+                    case "PMR":
+                      if (element.content > 0) {
+                        updatedparkingTypes.pmr = true;
+                      }
+                      break;
+                    case "Normal":
+                      break;
+                    case "Motocicleta":
+                      if (element.content > 0) {
+                        updatedparkingTypes.motorbike = true;
+                      }
+                      break;
+                    case "Eléctrica":
+                      if (element.content > 0 || element.content === "SI") {
+                        updatedparkingTypes.electric = true;
+                      }
+                      break;
+                  }
                 }
                 if (element.nameField === "Tipo acceso") {
-                  let name = element.name;
-                  let content = element.content;
-                  updatedAccessType.push({ name: name, content: content });
+                  if (element.name === "PMR") {
+                    updatedAccessType.pmr = true;
+                  }
                 }
                 if (element.nameField === "Tipo pago") {
-                  let name = element.name;
-                  let content = element.content;
-                  updatedPaymentType.push({ name: name, content: content });
+                  switch (element.name) {
+                    case "Pago con tarjeta":
+                      if (element.content !== "") {
+                        updatedPaymentType.card = true;
+                      }
+                      break;
+                    case "Pago en efectivo":
+                      if (element.content !== "") {
+                        updatedPaymentType.cash = true;
+                      }
+                      break;
+                    case "Pago desde móvil":
+                      if (element.content !== "") {
+                        updatedPaymentType.mobile = true;
+                      }
+                      break;
+                  }
                 }
                 if (element.nameField === "Servicios adicionales") {
-                  let name = element.name;
-                  let content = element.content;
-                  updatedAdditionalServices.push({
-                    name: name,
-                    content: content
-                  });
+                  switch (element.name) {
+                    case "Aseos":
+                    case "Aseos accesibles":
+                      updatedAdditionalServices.bathroom = true;
+                      break;
+                    case "Aseos accesibles":
+                      updatedAdditionalServices.adaptedBathroom = true;
+                      break;
+                    case "Ascensores salida calle":
+                    case "Escaleras adaptadas":
+                      if (
+                        element.content === "SI" ||
+                        element.content === "SÍ"
+                      ) {
+                        updatedAdditionalServices.elevator = true;
+                      }
+                      break;
+                    case "Cajero central presencial":
+                      if (element.content !== "") {
+                        updatedAdditionalServices.cashier = true;
+                      }
+                      break;
+                    case "Cajero automático tarjeta y metálico":
+                      if (element.content !== "") {
+                        updatedAdditionalServices.automatedPayment = true;
+                      }
+                      break;
+                    case "Recarga vh eléctrico":
+                      updatedparkingTypes.electric = true;
+                      break;
+                    case "Grabación de matrículas (E/S)":
+                    case "CCTV":
+                      updatedAdditionalServices.camera = true;
+                      break;
+                    case "Información a usuarios":
+                      updatedAdditionalServices.info = true;
+                      break;
+                    case "Aparcamiento para bicicletas":
+                      updatedparkingTypes.bike = true;
+                      break;
+                    case "Lavadero":
+                      updatedAdditionalServices.carWash = true;
+                      break;
+                  }
                 }
                 if (element.nameField === "Información") {
-                  let name = element.name;
-                  let content = element.content;
-                  updatedInformation.push({ name: name, content: content });
+                  updatedmaxHeight = element.content
                 }
               });
             }
             Parking.findOneAndUpdate(
-              { id_ayto: data.id},
+              { id_ayto: data.id },
               {
                 $set: {
                   address: updatedAddress,
                   accesses: updatedAccesses,
                   rates: updatedRates,
                   parkingType: updatedparkingTypes,
-                  accessType: updatedAccessType,
                   paymentType: updatedPaymentType,
                   additionalServices: updatedAdditionalServices,
-                  information: updatedInformation
+                  maxHeight: updatedmaxHeight
                 }
               },
               { new: true }
             )
               .then(updatedParking => {
-                return
-                
+                return;
               })
               .catch(err => {
                 console.log(err);
               });
           })
-          .catch(err => console.log(err));
+          .catch(err => console.log(err.toJSON));
       });
     })
     .catch(err => {
       console.log(err);
     })
     .then(done => {
-      res.redirect('/')
+      res.redirect("/");
     })
-    .catch((err) => console.log(err))
+    .catch(err => console.log(err));
 });
 
 module.exports = router;
