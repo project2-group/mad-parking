@@ -6,7 +6,6 @@ const access = require("./../middlewares/access.mid");
 
 const Comment = require("./../models/Comment");
 
-
 router.get('/', (req, res, next) => {
   const dataView = {
     title: 'madParking - Plazas de aparcamiento',
