@@ -26,13 +26,29 @@ const mapService = {
 
   drawMarkers: function(map) {
     axios.get("/api/parkingsForMarkers").then(({ data }) => {
+
+      var iconBase =
+        "https://res.cloudinary.com/dctu91qjy/image/upload/v1569491227/Resources/";
+
+      var icons = {
+        parking: {
+          icon: iconBase + "parking_lot_maps.png"
+        },
+        library: {
+          icon: iconBase + "library_maps.png"
+        },
+        info: {
+          icon: iconBase + "info-i_maps.png"
+        }
+      };
+
       data.forEach(parking => {
         (marker = new google.maps.Marker({
           position: {
             lat: parking.location.coordinates[1],
             lng: parking.location.coordinates[0]
           },
-          icon: `../../images/parking.png`,
+          icon: `https://res.cloudinary.com/dctu91qjy/image/upload/v1569491227/Resources/parking_yzgpct.png`,
           map
         })),
           marker.addListener("click", function(position) {
@@ -41,12 +57,15 @@ const mapService = {
                 parking.location.coordinates[1],
                 parking.location.coordinates[0]
               ),
-              content: `<div> Parking ${parking.name} </div> <a href="http://localhost:3000/search/${parking.id_ayto}">Más información</a>`,
+              content: `<div> Parking ${parking.nickName} </div> <a href="http://localhost:3000/search/${parking.id_ayto}">Más información</a>`,
               pixelOffset: new google.maps.Size(0, -10),
               map
             });
+
             infoWindow.setPosition(infoWindow.position);
             infoWindow.open(map);
+            map.setCenter(infoWindow.position);
+            map.setZoom(14);
           });
       });
     });
@@ -73,16 +92,10 @@ const mapService = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          const marker = new google.maps.Marker({
-            map,
-            anchorPoint: new google.maps.Point(0, -29),
-            icon: `../../images/car.png`
-          });
 
           infoWindow.setPosition(pos);
           infoWindow.setContent("Estás aquí");
-          infoWindow.open(map, marker);
-          marker.setVisible(true);  
+          infoWindow.open(map);
           map.setCenter(pos);
           map.setZoom(14);
         },
@@ -122,7 +135,7 @@ const mapService = {
     const marker = new google.maps.Marker({
       map: map,
       anchorPoint: new google.maps.Point(0, -29),
-      icon: `../../images/car.png`
+      icon: `https://res.cloudinary.com/dctu91qjy/image/upload/v1569491237/Resources/car_clj3su.png`
     });
 
     autocomplete.addListener("place_changed", function() {
@@ -141,7 +154,7 @@ const mapService = {
         map.fitBounds(place.geometry.viewport);
       } else {
         map.setCenter(place.geometry.location);
-        map.setZoom(17);
+        map.setZoom(14);
       }
       marker.setPosition(place.geometry.location);
       marker.setVisible(true);
