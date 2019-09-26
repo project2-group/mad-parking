@@ -7,7 +7,6 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const access = require("./../middlewares/access.mid");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-// Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
@@ -46,7 +45,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     successRedirect: "/",
-    failureRedirect: "/signup" 
+    failureRedirect: "/signup"
   })
 );
 
@@ -86,7 +85,6 @@ router.post("/signup", upload.single("userPhoto"), (req, res, next) => {
     const hashPass = bcrypt.hashSync(password, salt);
 
     const validationCode = crypto.randomBytes(20).toString("hex");
-    console.log(url);
     const newUser = new User({
       username,
       password: hashPass,
