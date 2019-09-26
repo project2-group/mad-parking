@@ -1,0 +1,34 @@
+<br><br>
+<h2 class="auth">PROFILE</h2>
+
+<form action="/profile/update" method="POST" enctype="multipart/form-data">
+  
+  <div class="form-field">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email" value={{userFound.email}}>
+  </div>
+
+  <div class="form-field">
+    <label for="username">Username</label>
+    <input id="username" type="text" name="username" value={{userFound.username}}>
+  </div>
+
+  <div class="form-field">
+    <img src="{{userFound.photo.url}}" alt="user-picture">
+    <label for="user-photo">Photo</label>
+    <input type="file" name="userPhoto" id="user-photo">
+  </div>
+
+
+  
+  {{#if message }}
+    <div class="error-message">{{ message }}</div>
+  {{/if}}
+
+  
+<br><br>
+  <button class="btn-form">Update account</button>
+
+  <br><br><br>
+
+</form>

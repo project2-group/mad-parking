@@ -21,15 +21,16 @@ router.get("/parkings", (req, res, next) => {
 });
 
 router.get("/parkingsForMarkers", (req, res, next) => {
-  updateFreeSpots()
+  updateFreeSpots();
   Parking.find().then(allParkings => {
     res.json(allParkings);
   });
 });
 
 router.get("/parking/:id", (req, res, next) => {
-  updateFreeSpots()
+  updateFreeSpots();
   Parking.find({ id_ayto: req.params.id })
+    .populate({ path: "comments", populate: { path: "authorId" } })
     .then(data => {
       res.json(data);
     })
@@ -45,18 +46,17 @@ function updateFreeSpots() {
     { new: true }
   )
     .then(deletedInfo => {
-      Parking.find().then(parkings => {
-        parkings.forEach(element => {
-          parkingDetailsApi
-            .getDetails(element.id_ayto)
-            .then(details => {
+      Parking.find()
+        .then(parkings => {
+          parkings.forEach(element => {
+            parkingDetailsApi.getDetails(element.id_ayto).then(details => {
               let availableParkingUpd = false;
               let availableSpotsUpd;
               if (details.data.lstOccupation) {
-                availableSpotsUpd = details.data.lstOccupation[0].free
+                availableSpotsUpd = details.data.lstOccupation[0].free;
               }
               if (availableSpotsUpd > 10) {
-                availableParkingUpd = true
+                availableParkingUpd = true;
               }
               Parking.findOneAndUpdate(
                 { id_ayto: details.data.id },
@@ -69,20 +69,15 @@ function updateFreeSpots() {
                 { new: true }
               )
                 .then(updatedParking => {
-                  return
+                  return;
                 })
                 .catch(err => console.log(err.code));
-                
-            })
-            
+            });
+          });
         })
-      })
-      .catch(err => console.log(err.code));
+        .catch(err => console.log(err.code));
     })
     .catch(err => console.log(err.code));
 }
-
-
-
 
 module.exports = router;
