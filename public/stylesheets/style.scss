@@ -2,17 +2,34 @@ html { font-size: 10px }
 * { box-sizing: border-box }
 
 @import 'sass/utils/_variables.scss';
+@import 'sass/base/_icons.scss';
 
+@import 'sass/components/_logo.scss';
+@import 'sass/components/_pop-up.scss';
+@import 'sass/components/_buttons.scss';
+@import 'sass/components/_forms.scss';
+
+@import 'sass/layout/_container.scss';
 @import 'sass/layout/_header.scss';
 @import 'sass/layout/_show-view.scss';
 
 @import 'sass/pages/_search-parking.scss';
+@import 'sass/pages/_home.scss';
+@import 'sass/pages/_auth.scss';
 
 
 body { 
   font: $size-text $font-text; 
   overflow: hidden;
+  background-color: #fefefe;
+  transition: background-color .4s cubic-bezier(0.705, 0.75, 0.705, 0.86);
+
+  &.active {
+    background-color: $yellow;
+  }
 }
+
+
 
 h2 { font-size: $size-h2 }
 

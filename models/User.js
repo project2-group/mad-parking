@@ -8,16 +8,14 @@ const EMAIL_PATTERN = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)
 
 const userSchema = new Schema(
   {
-    username: { type: String, required: true, unique: true },
+    username: { type: String, unique: true },
     password: {
       type: String,
-      required: true,
       // match: [PASSWORD_PATTERN, "this is not a correct password"]
     },
     email: {
       type: String,
       unique: true,
-      required: true,
       lowercase: true,
       trim: true,
       match: [EMAIL_PATTERN, "this is not a correct email"]
@@ -28,6 +26,7 @@ const userSchema = new Schema(
     },
     validationCode: { type: String, unique: true },
     active: {type: Boolean, default: false},
+    googleID: {type: String},
     favoriteParkings: [{ type : Schema.Types.ObjectId, ref: 'Parking' }]
   },
   {

@@ -19,6 +19,8 @@
   <script src="/javascripts/services/transition.service.js"></script>
 
   <script src="/javascripts/view-handlers/search.handler.js"></script>
+  <script src="/javascripts/view-handlers/menu.handler.js"></script>
+  <script src="/javascripts/view-handlers/auth.handler.js"></script>
 
   
 
@@ -26,20 +28,31 @@
 </head>
 
 <body>
-  <div class="container">
-    <header class="{{dataView.header}}">
-      <h1><a href="{{url}}">madParking</a></h1>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/auth/login">Login</a>
-        <a href="/auth/signup">Signup</a>
-        <a href="/auth/logout">Logout</a>
-      </nav>
-    </header>
+  <div class="main-container">
+    <div class="container">
+      <header class="{{dataView.header}}">
+        <h1 class="logo {{#if dataView.search}}hidden{{/if}}"><a href="/">mad<span style="color: #70C1B3" class="icon-logo"></span>arking</a></h1>
+        <a class="user-area" href="#"> <span class="icon-user-circle-o"></span></a>
+        <nav>
+          {{#unless user}}
 
+          <a href="/auth/login" ><span class="icon-user"></span> Login</a>
+          <a href="/auth/signup" ><span class="icon-clipboard"></span> Signup</a>
+          {{/unless}}
+          {{#if user}}
 
-    {{{body}}}
+          <a href="/"><span class="icon-profile"></span> Profile</a>
+          <a href="/" class="btn-favorites"><span class="icon-heart"></span> Favorites</a>
+          <a href="/auth/logout"><span class="icon-exit"></span> Logout</a>
+          
+          {{/if}}
+        </nav>
+      </header>
 
+   
+      {{{body}}}
+  
+    </div>
   </div>
 </body>
 

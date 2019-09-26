@@ -2,14 +2,16 @@
 .template-animated-view {
   position: absolute;
   top: 100vh;
-  transition: top .8s cubic-bezier(0.055, 0.75, 0.055, 0.86);
+  transition: top .95s cubic-bezier(0.055, 0.75, 0.055, 0.86);
   background-color: skyblue;
-  border-bottom: 1px solid blue;
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 8rem);
   width: 100%;
+  border-top: 2px solid $green;
 
 }
 .template-animated-view.show {
-  top: 5rem; 
+  top: 8rem; 
 }
+
+
 

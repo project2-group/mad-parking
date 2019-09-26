@@ -18,6 +18,10 @@
 
   <button>Login</button>
 
+{{#unless user}}
+<a href="/auth/google/">Log in with Google</a>
+{{/unless}}
+
   <p class="account-message">
     Don't have an account yet?
     <a href="/auth/signup">Signup</a>

@@ -1,0 +1,54 @@
+.description {
+  font-size: $size-h2;
+  padding: 3rem 1rem;
+  color: $blue;
+  text-align: center;
+  background-color: $yellow;
+  margin: 2rem 0;
+}
+
+.search-map {
+  color: #fff;
+  background-color: $light-green;
+  width: 90%;
+  padding: 1rem 3rem;
+  border-radius: 1rem;
+  font-size: 2rem;
+}
+
+
+.search-map, .social-login {
+  outline: none;
+  cursor: pointer; 
+  border: 0px;
+}
+
+.nav-home {
+  width: 25rem;
+  margin: 0 auto;
+
+
+  & li {
+    
+    text-align: center;
+
+    &:nth-child(2) {
+      margin-top: 3rem;
+      text-align: center;
+    }
+  
+    &:last-child {
+      margin-top: 1rem;
+      text-align: center;
+
+      & span {
+        position: relative;
+        left: 41px;
+      }
+    
+      & a {
+        color: $dark-blue;
+      } 
+    } 
+  }
+}

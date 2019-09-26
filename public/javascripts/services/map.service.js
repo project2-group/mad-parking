@@ -82,7 +82,7 @@ const mapService = {
           infoWindow.setPosition(pos);
           infoWindow.setContent("Estás aquí");
           infoWindow.open(map, marker);
-          marker.setVisible(true);
+          marker.setVisible(true);  
           map.setCenter(pos);
           map.setZoom(14);
         },
