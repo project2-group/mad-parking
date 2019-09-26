@@ -22,7 +22,13 @@ const mapService = {
       restriction: {
         latLngBounds: madridBounds,
         strictBounds: true
-      }
+      },
+      zoomControl: true,
+      mapTypeControl: false,
+      scaleControl: false,
+      streetViewControl: false,
+      rotateControl: false,
+      fullscreenControl: false
     });
 
     return map;
@@ -30,29 +36,47 @@ const mapService = {
 
   drawMarkers: function(map) {
     axios.get("/api/parkingsForMarkers").then(({ data }) => {
+      var icons = {
+        true: {
+          icon:
+            "https://res.cloudinary.com/dctu91qjy/image/upload/v1569514586/Resources/markerP_h2bo9l.png"
+        },
+        false: {
+          icon:
+            "https://res.cloudinary.com/dctu91qjy/image/upload/v1569514574/Resources/plogorojo_dgdnod.png"
+        }
+      };
+
       data.forEach(parking => {
         (marker = new google.maps.Marker({
           position: {
             lat: parking.location.coordinates[1],
             lng: parking.location.coordinates[0]
           },
-          icon: `../../images/parking.png`,
+          icon: icons[parking.availableParking].icon,
           map
         })),
           marker.addListener("click", function(position) {
 
-            
-
+            if (document.querySelectorAll(".gm-style-iw-a"))
+              document
+                .querySelectorAll(".gm-style-iw-a")
+                .forEach(val => val.remove());
 
             infoWindow = new google.maps.InfoWindow({
               position: new google.maps.LatLng(
                 parking.location.coordinates[1],
                 parking.location.coordinates[0]
               ),
+
               content: `<div> <a id="${parking.id_ayto}" data-id="${parking.id_ayto}" class="load-details" href="#">${parking.nickName} </a></div> <a data-id="${parking.id_ayto}" href="#">Más información</a>`,
+
+
+
               pixelOffset: new google.maps.Size(0, -10),
               map
             });
+
             infoWindow.setPosition(infoWindow.position);
 
 
@@ -60,10 +84,9 @@ const mapService = {
 
             infoWindow.open(map);
 
+            map.setCenter(infoWindow.position);
+            map.setZoom(14);
 
-            
-            
-            
           });
       });
     });
@@ -80,7 +103,15 @@ const mapService = {
       infoWindow.open(map);
     }
 
-    const infoWindow = new google.maps.InfoWindow();
+    const infoWindow = new google.maps.InfoWindow({
+      pixelOffset: new google.maps.Size(0, -30)
+    });
+
+    const marker = new google.maps.Marker({
+      map: map,
+      anchorPoint: new google.maps.Point(0, -29),
+      icon: `https://res.cloudinary.com/dctu91qjy/image/upload/v1569491237/Resources/car_clj3su.png`
+    });
 
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -90,17 +121,15 @@ const mapService = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          const marker = new google.maps.Marker({
-            map,
-            anchorPoint: new google.maps.Point(0, -29),
-            icon: `../../images/car.png`
-          });
+
+          marker.setPosition(pos);
+          marker.setVisible(true);
 
           infoWindow.setPosition(pos);
           infoWindow.setContent("Estás aquí");
-          infoWindow.open(map, marker);
-          marker.setVisible(true);  
-          map.setCenter(pos);
+          infoWindow.open(map);
+
+          map.panTo(pos);
           map.setZoom(14);
         },
         function() {
@@ -139,7 +168,7 @@ const mapService = {
     const marker = new google.maps.Marker({
       map: map,
       anchorPoint: new google.maps.Point(0, -29),
-      icon: `../../images/car.png`
+      icon: `https://res.cloudinary.com/dctu91qjy/image/upload/v1569491237/Resources/car_clj3su.png`
     });
 
     autocomplete.addListener("place_changed", function() {
@@ -157,8 +186,8 @@ const mapService = {
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
       } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);
+        map.panTo(place.geometry.location);
+        map.setZoom(14);
       }
       marker.setPosition(place.geometry.location);
       marker.setVisible(true);
@@ -184,7 +213,43 @@ const mapService = {
       infowindow.open(map, marker);
       mapService.drawMarkers(map);
     });
-  }
+  },
+
+  // drawFavorites: function(map) {
+  //   axios.get("/").then(({ data }) => {
+  //     data.forEach(parking => {
+  //       (marker = new google.maps.Marker({
+  //         position: {
+  //           lat: parking.location.coordinates[1],
+  //           lng: parking.location.coordinates[0]
+  //         },
+  //         icon:
+  //           "https://res.cloudinary.com/dctu91qjy/image/upload/v1569514586/Resources/markerP_h2bo9l.png",
+  //         map
+  //       })),
+  //         marker.addListener("click", function(position) {
+  //           if (document.querySelectorAll(".gm-style-iw-a"))
+  //             document
+  //               .querySelectorAll(".gm-style-iw-a")
+  //               .forEach(val => val.remove());
+  //           infoWindow = new google.maps.InfoWindow({
+  //             position: new google.maps.LatLng(
+  //               parking.location.coordinates[1],
+  //               parking.location.coordinates[0]
+  //             ),
+  //             content: `<div> Parking ${parking.nickName} </div> <a href="http://localhost:3000/search/${parking.id_ayto}">Más información</a>`,
+  //             pixelOffset: new google.maps.Size(0, -10),
+  //             map
+  //           });
+
+  //           infoWindow.setPosition(infoWindow.position);
+  //           infoWindow.open(map);
+  //           map.setCenter(infoWindow.position);
+  //           map.setZoom(14);
+  //         });
+  //     });
+  //   });
+  // }
 };
 
 
