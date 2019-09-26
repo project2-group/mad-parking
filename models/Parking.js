@@ -29,34 +29,31 @@ const parkingSchema = new Schema(
     ],
     parkingType: [
       {
-        name: String,
-        content: String
+        total: { type: Number, default: undefined },
+        pmr: { type: Boolean, default: false },
+        electric: { type: Boolean, default: false },
+        motorbike: { type: Boolean, default: false },
+        bike: { type: Boolean, default: false }
       }
     ],
-    accessType: [
-      {
-        name: String,
-        content: String
-      }
-    ],
-    paymentType: [
-      {
-        name: String,
-        content: String
-      }
-    ],
-    additionalServices: [
-      {
-        name: String,
-        content: String
-      }
-    ],
-    information: [
-      {
-        name: String,
-        content: String
-      }
-    ]
+    paymentType: {
+      cash: { type: Boolean, default: false },
+      card: { type: Boolean, default: false },
+      mobile: { type: Boolean, default: false }
+    },
+    additionalServices: {
+      bathroom: { type: Boolean, default: false },
+      adaptedBathroom: { type: Boolean, default: false },
+      elevator: { type: Boolean, default: false },
+      automatedPayment: { type: Boolean, default: false },
+      cashier: { type: Boolean, default: false },
+      camera: { type: Boolean, default: false },
+      info: { type: Boolean, default: false },
+      carWash: { type: Boolean, default: false }
+    },
+    maxHeight: String,
+    availableParking: { type: Boolean, default: false },
+    availableSpots: { type: Number, default: null }
   },
   {
     timestamps: true
