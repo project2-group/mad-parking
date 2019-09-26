@@ -28,28 +28,47 @@ router.get("/update", access.checkLogin, (req, res) => {
     .catch(err => {
       console.log(err);
     });
-  
 });
 
 router.post(
   "/update/:id",
   [access.checkLogin, upload.single("userPhoto")],
-  (req, res) => {
-    let picName = req.file.originalname;
-    let url = req.file.url;
-
-    User.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        photo: {
-          url,
-          name: picName
-        }
-      },
-      { new: true }
-    ).then(userUpdated => {
-      userUpdated;
-    });
+  (req, res, next) => {
+    const { username, email } = req.body;
+    let originalname;
+    let url;
+    if (req.file) {
+      originalname = req.file.originalname;
+      url = req.file.url;
+      User.findOneAndUpdate(
+        { _id: req.user._id },
+        {
+          $set: {
+            username: username,
+            email: email,
+            photo: {
+              url: url,
+              name: originalname
+            }
+          }
+        },
+        { new: true }
+      ). then(() => {res.redirect('/')})
+      .catch ((err)=> {console.log(err)})
+    } else {
+      User.findOneAndUpdate(
+        { _id: req.user._id },
+        {
+          $set: {
+            username: username,
+            email: email
+          }
+        },
+        { new: true }
+      ). then(() => {res.redirect('/')})
+      .catch ((err)=> {console.log(err)})
+    }
   }
 );
+
 module.exports = router;
