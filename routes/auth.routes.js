@@ -13,11 +13,9 @@ const bcryptSalt = 10;
 const transporter = require("./../configs/nodemailer.config");
 
 router.get("/login", (req, res, next) => {
-
   const dataView = {
     auth: true
   }
-
   if (req.query.error) {
     res.render("auth/login", {dataView,
       message: "Cuenta no activada, verifica tu email."
@@ -55,11 +53,9 @@ router.get(
 );
 
 router.get("/signup", (req, res, next) => {
-
   const dataView = {
     auth: true
   }
-
   if (req.query.error) {
     res.render("auth/signup", {dataView, message: "User not found" });
   } else {

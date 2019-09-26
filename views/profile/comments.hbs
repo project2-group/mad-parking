@@ -1,0 +1,34 @@
+<br><br>
+<h2 class="auth">NEW COMMENT</h2>
+
+<form action="/api/parking/add-review" method="POST">
+
+
+<input type="text" name="_id" id="_id" value="{{data.[0].id}}" hidden>
+  <div class="form-field">
+    <label for="text">Text</label>
+    <textarea id="text" type="textarea" name="text" cols="30" rows="10"></textarea>
+  </div>
+
+  <div class="form-field">
+    <label for="rate">Rate</label>
+    <input type="radio" name="rate" id="1" value="1">1
+    <input type="radio" name="rate" id="2" value="2">2
+    <input type="radio" name="rate" id="3" value="3">3
+    <input type="radio" name="rate" id="4" value="4">4
+    <input type="radio" name="rate" id="5" value="5">5
+  </div>
+
+
+  
+  {{#if message }}
+    <div class="error-message">{{ message }}</div>
+  {{/if}}
+
+  
+<br><br>
+  <button class="btn-form">Leave a comment</button>
+
+  <br><br><br>
+
+</form>
