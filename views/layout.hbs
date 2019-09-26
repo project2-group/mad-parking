@@ -20,7 +20,7 @@
 
   <script src="/javascripts/view-handlers/search.handler.js"></script>
   <script src="/javascripts/view-handlers/menu.handler.js"></script>
-  <script src="/javascripts/view-handlers/auth.handler.js"></script>
+  
 
   
 
@@ -34,18 +34,21 @@
         <h1 class="logo {{#if dataView.search}}hidden{{/if}}"><a href="/">mad<span style="color: #70C1B3" class="icon-logo"></span>arking</a></h1>
         <a class="user-area" href="#"> <span class="icon-user-circle-o"></span></a>
         <nav>
+
+          {{#unless dataView.auth}}
           {{#unless user}}
 
           <a href="/auth/login" ><span class="icon-user"></span> Login</a>
           <a href="/auth/signup" ><span class="icon-clipboard"></span> Signup</a>
           {{/unless}}
-          {{#if user}}
+            {{#if user}}
 
-          <a href="/"><span class="icon-profile"></span> Profile</a>
-          <a href="/" class="btn-favorites"><span class="icon-heart"></span> Favorites</a>
-          <a href="/auth/logout"><span class="icon-exit"></span> Logout</a>
-          
-          {{/if}}
+            <a href="/"><span class="icon-profile"></span> Profile</a>
+            <a href="/" class="btn-favorites"><span class="icon-heart"></span> Favorites</a>
+            <a href="/auth/logout"><span class="icon-exit"></span> Logout</a>
+            
+            {{/if}}
+          {{/unless}}
         </nav>
       </header>
 

@@ -13,12 +13,17 @@ const bcryptSalt = 10;
 const transporter = require("./../configs/nodemailer.config");
 
 router.get("/login", (req, res, next) => {
+
+  const dataView = {
+    auth: true
+  }
+
   if (req.query.error) {
-    res.render("auth/login", {
-      message: "Account not activated. Please check your email."
+    res.render("auth/login", {dataView,
+      message: "Cuenta no activada, verifica tu email."
     });
   } else {
-    res.render("auth/login", { message: req.flash("error") });
+    res.render("auth/login", {dataView, message: req.flash("error") });
   }
 });
 
@@ -50,10 +55,15 @@ router.get(
 );
 
 router.get("/signup", (req, res, next) => {
+
+  const dataView = {
+    auth: true
+  }
+
   if (req.query.error) {
-    res.render("auth/signup", { message: "User not found" });
+    res.render("auth/signup", {dataView, message: "User not found" });
   } else {
-    res.render("auth/signup");
+    res.render("auth/signup", {dataView});
   }
 });
 
@@ -66,18 +76,18 @@ router.post("/signup", upload.single("userPhoto"), (req, res, next) => {
     url = req.file.url;
   }
   if (username === "" || password === "" || email === "") {
-    res.render("auth/signup", { message: "Indicate username and password" });
+    res.render("auth/signup", { message: "Indica usuario y password" });
     return;
   }
   User.findOne({ email }, "email", (err, user) => {
     if (email !== null) {
-      res.render("auth/signup", { message: "This user already exists" });
+      res.render("auth/signup", { message: "El usuario ya existe" });
       return;
     }
   });
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/signup", { message: "This user already exists" });
+      res.render("auth/signup", { message: "Este usuario ya existe" });
       return;
     }
 

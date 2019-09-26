@@ -1,4 +1,5 @@
-<h2>Signup</h2>
+<br><br>
+<h2 class="auth">Signup</h2>
 
 <form action="/auth/signup" method="POST" enctype="multipart/form-data">
   
@@ -26,13 +27,15 @@
     <div class="error-message">{{ message }}</div>
   {{/if}}
 
-  <br><br>
+  
+<br><br>
+  <button class="btn-form">Create account</button>
 
-  <button>Create account</button>
-{{#unless user}}
-<a href="/auth/google/">Sign up with Google</a>
-{{/unless}}
-
+  <br><br><br>
+  {{#unless user}}
+    <a class="social-login" href="/auth/google/"><span>Sign up with Google</span></a>
+  {{/unless}}
+ 
   <p class="account-message">
     Do you already have an account?
     <a href="/auth/login">Login</a>
