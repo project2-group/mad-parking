@@ -186,7 +186,7 @@ html {
 .social-login span {
   display: none; }
 
-.pop-up button {
+.btn-form {
   font-size: 2rem;
   background-color: #313156;
   border: 1px solid #272c34;
@@ -199,7 +199,7 @@ html {
   font-size: 90%;
   text-transform: uppercase;
   cursor: pointer; }
-  .pop-up button:hover {
+  .btn-form:hover {
     background-color: #247BA0;
     color: #f1f1f1; }
 
@@ -213,12 +213,17 @@ label {
     color: #247BA0;
     outline: none;
     font-size: 2rem;
-    padding-left: 40px; }
+    padding-left: 2rem; }
 
 .form-field {
   margin-bottom: 1.2rem; }
   .form-field:last-child {
     margin-bottom: 0; }
+
+.error-message {
+  background-color: #FF1654;
+  color: #fff;
+  padding: 1rem 0; }
 
 .main-container {
   display: flex;
@@ -422,13 +427,18 @@ header.home.top h1 a {
   width: 380px;
   left: calc(50vw - 190px); }
 
-.pop-up h2 {
+h2.auth {
   font-size: 2rem;
   color: #272c34;
   text-transform: uppercase;
-  margin-bottom: 1.5rem; }
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-style: italic; }
 
-.pop-up p {
+label {
+  text-align: left; }
+
+p {
   margin-top: 2rem;
   text-align: center; }
 

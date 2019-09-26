@@ -18,8 +18,8 @@
   display: none;
 }
 
-.pop-up {
-  & button {
+
+  .btn-form {
     font-size: 2rem;
     background-color: $dark-blue;
     border: 1px solid $super-dark-blue;
@@ -38,4 +38,3 @@
       color: #f1f1f1;
     }
   }
-}
