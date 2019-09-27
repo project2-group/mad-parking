@@ -33,6 +33,9 @@ router.get("/parking/:id", (req, res, next) => {
   let id = req.params.id;
   updateFreeSpots();
   getAssesment(id);
+  if (req.user) {
+    addFavorites(req.user.id, id)
+  }
   Parking.find({ id_ayto: id })
     .populate({ path: "comments", populate: { path: "authorID" } })
     .then(data => {
@@ -87,6 +90,13 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
     .catch(err => console.log(err));
 });
 
+router.post('/parking/add-favorite', (req, res, next) => {
+  if(req.user) {
+    addFavorites(req.user.id, req.params.id)
+  } else {
+    return
+  }
+})
 function roundHalf(n) {
   return (Math.round(n * 2) / 2).toFixed(1);
 }
@@ -134,42 +144,44 @@ function getAssesment(id) {
   Parking.find({ id_ayto: id })
     .then(parkingFound => {
       parkingFound.forEach(element => {
-        let newAverage;
-        let output =
-          element.assessment.reduce((ac, cu) => ac + +cu, 0) /
-          element.assessment.length;
-        let average = roundHalf(+output);
-        if (average.toString().indexOf(".0") > 0) {
-          newAverage = Math.round(average);
-        } else {
-          newAverage = average;
+        if (element.assessment.length > 0) {
+          let newAverage;
+          let output =
+            element.assessment.reduce((ac, cu) => ac + +cu, 0) /
+            element.assessment.length;
+          let average = roundHalf(+output);
+          if (average.toString().indexOf(".0") > 0) {
+            newAverage = Math.round(average);
+          } else {
+            newAverage = average;
+          }
+          Parking.findOneAndUpdate(
+            { _id: element.id },
+            { $set: { assessmentAverage: newAverage } },
+            { new: true }
+          )
+            .then(updated => {
+              return;
+            })
+            .catch(err => {
+              console.log(err);
+            });
         }
-        Parking.findOneAndUpdate(
-          { _id: element.id },
-          { $set: { assessmentAverage: newAverage } },
-          { new: true }
-        )
-          .then(updated => {
-            return;
-          })
-          .catch(err => {
-            console.log(err);
-          });
       });
     })
     .catch(err => console.log(err));
 }
-function addFavorites(userId) {
-  userId = req.user.id;
-  Parking.findOne({ id_ayto: req.params.id })
+function addFavorites(userId, id) {
+  Parking.findOne({ id_ayto: id })
   .then((parkingFound) => {
     currentParking = parkingFound.id;
     User.findOneAndUpdate(
-      { id: userId },
+      { _id: userId },
       { $push: { favoriteParkings: currentParking } },
       { new: true }
     )
       .then(userFound => {
+        console.log(userFound)
         return;
       })
       .catch(err => console.log(err));
