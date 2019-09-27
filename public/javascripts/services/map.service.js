@@ -1,8 +1,4 @@
-
-
-const mapService = { 
-
-  
+const mapService = {
   init: function() {
     const centerPoint = {
       lat: 40.4167,
@@ -57,7 +53,6 @@ const mapService = {
           map
         })),
           marker.addListener("click", function(position) {
-
             if (document.querySelectorAll(".gm-style-iw-a"))
               document
                 .querySelectorAll(".gm-style-iw-a")
@@ -71,14 +66,11 @@ const mapService = {
 
               content: `<div> <a id="${parking.id_ayto}" data-id="${parking.id_ayto}" class="load-details" href="#">${parking.nickName} </a></div> <a data-id="${parking.id_ayto}" href="#">Más información</a>`,
 
-
-
               pixelOffset: new google.maps.Size(0, -10),
               map
             });
 
             infoWindow.setPosition(infoWindow.position);
-
 
             showDetails(parking.id_ayto, this.user);
 
@@ -86,7 +78,6 @@ const mapService = {
 
             map.setCenter(infoWindow.position);
             map.setZoom(14);
-
           });
       });
     });
@@ -140,6 +131,18 @@ const mapService = {
       // Browser doesn't support Geolocation
       handleLocationError(false, infoWindow, map.getCenter());
     }
+
+    if (document.querySelectorAll(".gm-style-iw-a"))
+        document
+          .querySelectorAll(".gm-style-iw-a")
+          .forEach(val => val.remove());
+
+    if (document.querySelectorAll('[src="https://res.cloudinary.com/dctu91qjy/image/upload/v1569491237/Resources/car_clj3su.png"]'))
+      document
+        .querySelectorAll('[src="https://res.cloudinary.com/dctu91qjy/image/upload/v1569491237/Resources/car_clj3su.png"]')
+        .forEach(val => val.parentNode.remove())
+      
+        
 
     mapService.drawMarkers(map);
   },
@@ -207,13 +210,23 @@ const mapService = {
         ].join(" ");
       }
 
+      if (document.querySelectorAll(".gm-style-iw-a"))
+        document
+          .querySelectorAll(".gm-style-iw-a")
+          .forEach(val => val.remove());
+
+      if (document.querySelectorAll('[src="https://res.cloudinary.com/dctu91qjy/image/upload/v1569491237/Resources/car_clj3su.png"]'))
+        document
+          .querySelectorAll('[src="https://res.cloudinary.com/dctu91qjy/image/upload/v1569491237/Resources/car_clj3su.png"]')
+          .forEach(val => val.parentNode.remove())
+
       infowindowContent.children["place-icon"].src = place.icon;
       infowindowContent.children["place-name"].textContent = place.name;
       infowindowContent.children["place-address"].textContent = address;
       infowindow.open(map, marker);
       mapService.drawMarkers(map);
     });
-  },
+  }
 
   // drawFavorites: function(map) {
   //   axios.get("/").then(({ data }) => {
@@ -255,26 +268,22 @@ const mapService = {
 
 
 
+
 function showDetails(id) {
 
+
   setTimeout(() => {
-    
     const title = document.getElementById(id);
-    
-    title.addEventListener('click', function(e, user) {
-      const goToSearchParking = (route) => restAppApi.get(route);
-  
-      
 
-    goToSearchParking('api/parking/' + id)
+    title.addEventListener("click", function(e, user) {
+      const goToSearchParking = route => restAppApi.get(route);
+
+      goToSearchParking("api/parking/" + id)
         .then(responseFromAPI => {
-  
-          
-          if(document.querySelector('.detailsBox')) {
-            
-            document.querySelector('.detailsBox').remove();
-
+          if (document.querySelector(".detailsBox")) {
+            document.querySelector(".detailsBox").remove();
           }
+
 
             const body = document.querySelector('body');
 
@@ -496,6 +505,28 @@ function showDetails(id) {
 
                   <a target="_blank" href="https://www.google.com/maps/dir/${responseFromAPI.data[0].location.coordinates[1]},${responseFromAPI.data[0].location.coordinates[0]}/">Como llegar</a>
                   <div style="clear: both;">
+
+          const body = document.querySelector("body");
+
+          const newDiv = document.createElement("div");
+          newDiv.classList.add("detailsBox");
+          console.log(responseFromAPI);
+
+          console.log(user);
+          let button = user
+            ? `<a href="#">Añadir reseña</a>`
+            : `<a href="auth/login">Necesario login</a>`;
+
+          content = `
+              <div class="container-details">
+                <div class="top-details">
+                  <h3>${responseFromAPI.data[0].nickName}</h3>
+                  <a target="_blank" href="https://www.google.com/maps/dir/${
+                    responseFromAPI.data[0].location.coordinates[1]
+                  },${
+            responseFromAPI.data[0].location.coordinates[0]
+          }/">Como llegar</a>
+
                   <h4>SERVICIOS</h4>
                   <p class="icons">${service}</p>
                   <h4>PLAZAS</h4> 
@@ -519,6 +550,7 @@ function showDetails(id) {
               </div>
               
             `;
+
             
             content = content.replace('undefined', '');
             newDiv.innerHTML = content;
@@ -549,20 +581,14 @@ function showDetails(id) {
             body.appendChild(newDiv);
          
 
-          
+          setTimeout(() => {
+            newDiv.classList.add("show");
+          }, 300);
+          body.appendChild(newDiv);
         })
         .catch(err => console.log("Error is: ", err));
     });
-
-
   }, 1000);
- 
-    
 
-  
-
-
-  
-
-  
 }
+

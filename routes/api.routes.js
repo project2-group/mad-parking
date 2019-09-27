@@ -11,6 +11,8 @@ const parkingDetailsApi = new ParkingApi(
 const access = require('./../middlewares/access.mid');
 const router = express.Router();
 const Comment = require("./../models/Comment");
+const access = require("./../middlewares/access.mid");
+const User = require("./../models/User");
 
 router.get("/parkings", (req, res, next) => {
   const dataView = {
@@ -57,9 +59,12 @@ function addFavorites(userId) {
 
 
 router.get("/parking/:id", (req, res, next) => {
-  let id = req.params.id
+  let id = req.params.id;
   updateFreeSpots();
   getAssesment(id);
+  if (req.user) {
+    addFavorites(req.user.id, id)
+  }
   Parking.find({ id_ayto: id })
     .populate({ path: "comments", populate: { path: "authorID" } })
     .then(data => {
@@ -70,7 +75,7 @@ router.get("/parking/:id", (req, res, next) => {
     });
 });
 
-router.get("/parking/add-review/:id", (req, res, next) => {
+router.get("/parking/add-review/:id", access.checkLogin, (req, res, next) => {
   Parking.find({ id_ayto: req.params.id })
     .populate({ path: "comments", populate: { path: "authorID" } })
     .then(data => {
@@ -78,7 +83,12 @@ router.get("/parking/add-review/:id", (req, res, next) => {
         title: "madParking - Buscador de plazas de aparcamiento",
         header: "home"
       };
-      res.render("profile/comments", { data, dataView });
+      getAssesment(req.params.id);
+      if(req.query.comment) {
+        res.render("profile/comments", { data, dataView, message: "Gracias, hemos añadido tu comentario" })
+      } else {
+        res.render("profile/comments", { data, dataView })
+      }
     })
     .catch(err => {
       console.log(err);
@@ -104,8 +114,10 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
             { new: true }
           )
           .then(commentAdded => {
-            getAssesment(parkingWithComment.id_ayto)
-            .then(res.status(200).json())
+
+            getAssesment(parkingWithComment.id_ayto);
+            res.redirect(`/api/parking/add-review/${parkingWithComment.id_ayto}?comment=true`);
+
           })
           .catch(err => console.log(err));
       });
@@ -114,6 +126,16 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
 });
 
 
+router.post('/parking/add-favorite', (req, res, next) => {
+  if(req.user) {
+    addFavorites(req.user.id, req.params.id)
+  } else {
+    return
+  }
+})
+function roundHalf(n) {
+  return (Math.round(n * 2) / 2).toFixed(1);
+}
 
 function updateFreeSpots() {
   Parking.updateMany(
@@ -156,28 +178,53 @@ function updateFreeSpots() {
     .catch(err => console.log(err.code));
 }
 function getAssesment(id) {
- id = 5
-  Parking.find({id_ayto: id})
+  Parking.find({ id_ayto: id })
     .then(parkingFound => {
       parkingFound.forEach(element => {
-        let output =
-          element.assessment.reduce((ac, cu) => ac + +cu, 0) /
-          element.assessment.length;
-        let average = +output.toFixed(1);
-        Parking.findOneAndUpdate(
-          { _id: element.id },
-          { $set: { assessmentAverage: average } },
-          { new: true }
-        )
-          .then(updated => {
-            return;
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        if (element.assessment.length > 0) {
+          let newAverage;
+          let output =
+            element.assessment.reduce((ac, cu) => ac + +cu, 0) /
+            element.assessment.length;
+          let average = roundHalf(+output);
+          if (average.toString().indexOf(".0") > 0) {
+            newAverage = Math.round(average);
+          } else {
+            newAverage = average;
+          }
+          Parking.findOneAndUpdate(
+            { _id: element.id },
+            { $set: { assessmentAverage: newAverage } },
+            { new: true }
+          )
+            .then(updated => {
+              return;
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
       });
     })
     .catch(err => console.log(err));
+}
+function addFavorites(userId, id) {
+  Parking.findOne({ id_ayto: id })
+  .then((parkingFound) => {
+    currentParking = parkingFound.id;
+    User.findOneAndUpdate(
+      { _id: userId },
+      { $push: { favoriteParkings: currentParking } },
+      { new: true }
+    )
+      .then(userFound => {
+        console.log(userFound)
+        return;
+      })
+      .catch(err => console.log(err));
+  })
+  .catch((err) => console.log(err))
+  
 }
 
 module.exports = router;

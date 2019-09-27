@@ -1,22 +1,26 @@
 <br><br>
-<h2 class="auth">NEW COMMENT</h2>
+<h2 class="auth">COMENTARIO NUEVO</h2>
 
 <form action="/api/parking/add-review" method="POST">
 
 
-<input type="text" name="id" id="id" value="{{data.[0].id}}" hidden>
+<input type="hidden" name="id" id="id" value="{{data.[0].id}}">
   <div class="form-field">
-    <label for="text">Text</label>
+    <label for="text">Texto</label>
     <textarea id="text" type="textarea" name="text" cols="30" rows="10"></textarea>
   </div>
 
   <div class="form-field">
-    <label for="assessment">Rate</label>
-    <input type="radio" name="assessment" id="1" value="1">1
-    <input type="radio" name="assessment" id="2" value="2">2
-    <input type="radio" name="assessment" id="3" value="3">3
-    <input type="radio" name="assessment" id="4" value="4">4
-    <input type="radio" name="assessment" id="5" value="5">5
+    <label for="assessment">Valoración</label>
+    <select name="assessment" id="assessment">
+<option name="1" id="1">1</option>
+<option name="2" id="2">2</option>
+<option name="3" id="3">3</option>
+<option name="4" id="4">4</option>
+<option name="5" id="5">5</option>
+
+    </select>
+
   </div>
 
 
@@ -28,7 +32,8 @@
   
 <br><br>
   <button class="btn-form">Leave a comment</button>
-
   <br><br><br>
+<a href="/" class="btn-form">Atrás</a>
+<br><br>
 
 </form>

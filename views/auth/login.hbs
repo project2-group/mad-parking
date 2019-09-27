@@ -2,14 +2,14 @@
 <h2 class="auth">Login</h2>
 
 <form action="/auth/login" method="POST" id="form-container">
-  <label for="username">Username</label>
+  <label for="username">Usuario</label>
   <input id="username" type="text" name="username" placeholder="Lola Mento">
 
   <br><br>
 
-  <label for="password">Password</label>
+  <label for="password">Contraseña</label>
   
-  <input id="password" type="password" name="password" placeholder="Tu password">
+  <input id="password" type="password" name="password" placeholder="Tu contraseña">
   <br>
   {{#if message }}
     <div class="error-message">{{ message }}</div>
@@ -24,7 +24,7 @@
 {{/unless}}
 
   <p class="account-message">
-    Don't have an account yet?
-    <a href="/auth/signup">Signup</a>
+    ¿No tienes cuenta todavía?
+    <a href="/auth/signup">Regístrate</a>
   </p>
 </form>

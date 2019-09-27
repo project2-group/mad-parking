@@ -10,6 +10,7 @@ router.get("/", access.checkLogin, (req, res) => {
     auth: true
   };
   User.findById(req.user._id)
+  .populate({ path: "favoriteParkings" })
     .then(userFound => {
       res.render("profile/profile", { userFound, dataView });
     })
