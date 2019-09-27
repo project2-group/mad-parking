@@ -87,6 +87,9 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
     .catch(err => console.log(err));
 });
 
+function roundHalf(n) {
+  return (Math.round(n*2)/2).toFixed(1);
+};
 function updateFreeSpots() {
   Parking.updateMany(
     {},
@@ -131,13 +134,19 @@ function getAssesment(id) {
   Parking.find({id_ayto: id})
     .then(parkingFound => {
       parkingFound.forEach(element => {
+        let newAverage;
         let output =
           element.assessment.reduce((ac, cu) => ac + +cu, 0) /
           element.assessment.length;
-        let average = +output.toFixed(1);
+        let average = roundHalf(+output);
+        if (average.toString().indexOf(".0") > 0) {
+          newAverage = Math.round(average)
+        } else {
+          newAverage = average
+        }
         Parking.findOneAndUpdate(
           { _id: element.id },
-          { $set: { assessmentAverage: average } },
+          { $set: { assessmentAverage: newAverage } },
           { new: true }
         )
           .then(updated => {
