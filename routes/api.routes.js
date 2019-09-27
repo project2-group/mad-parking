@@ -10,7 +10,7 @@ const parkingDetailsApi = new ParkingApi(
 const router = express.Router();
 const Comment = require("./../models/Comment");
 const access = require("./../middlewares/access.mid");
-
+const User = require("./../models/User");
 
 router.get("/parkings", (req, res, next) => {
   const dataView = {
@@ -30,7 +30,7 @@ router.get("/parkingsForMarkers", (req, res, next) => {
 });
 
 router.get("/parking/:id", (req, res, next) => {
-  let id = req.params.id
+  let id = req.params.id;
   updateFreeSpots();
   getAssesment(id);
   Parking.find({ id_ayto: id })
@@ -43,7 +43,7 @@ router.get("/parking/:id", (req, res, next) => {
     });
 });
 
-router.get("/parking/add-review/:id", access.checkLogin,(req, res, next) => {
+router.get("/parking/add-review/:id", access.checkLogin, (req, res, next) => {
   Parking.find({ id_ayto: req.params.id })
     .populate({ path: "comments", populate: { path: "authorID" } })
     .then(data => {
@@ -51,7 +51,7 @@ router.get("/parking/add-review/:id", access.checkLogin,(req, res, next) => {
         title: "madParking - Buscador de plazas de aparcamiento",
         header: "home"
       };
-      getAssesment(req.params.id)
+      getAssesment(req.params.id);
       res.render("profile/comments", { data, dataView });
     })
     .catch(err => {
@@ -78,7 +78,7 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
             { new: true }
           )
           .then(commentAdded => {
-            getAssesment(parkingWithComment.id_ayto)
+            getAssesment(parkingWithComment.id_ayto);
             res.redirect(`/api/parking/${parkingWithComment.id_ayto}`);
           })
           .catch(err => console.log(err));
@@ -88,8 +88,8 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
 });
 
 function roundHalf(n) {
-  return (Math.round(n*2)/2).toFixed(1);
-};
+  return (Math.round(n * 2) / 2).toFixed(1);
+}
 function updateFreeSpots() {
   Parking.updateMany(
     {},
@@ -131,7 +131,7 @@ function updateFreeSpots() {
     .catch(err => console.log(err.code));
 }
 function getAssesment(id) {
-  Parking.find({id_ayto: id})
+  Parking.find({ id_ayto: id })
     .then(parkingFound => {
       parkingFound.forEach(element => {
         let newAverage;
@@ -140,9 +140,9 @@ function getAssesment(id) {
           element.assessment.length;
         let average = roundHalf(+output);
         if (average.toString().indexOf(".0") > 0) {
-          newAverage = Math.round(average)
+          newAverage = Math.round(average);
         } else {
-          newAverage = average
+          newAverage = average;
         }
         Parking.findOneAndUpdate(
           { _id: element.id },
@@ -156,6 +156,19 @@ function getAssesment(id) {
             console.log(err);
           });
       });
+    })
+    .catch(err => console.log(err));
+}
+function addFavorites(userId) {
+  userId = req.user.id;
+  currentParking = req.params.id;
+  User.findOneAndUpdate(
+    { id: userId },
+    { $push: { favoriteParkings: currentParking } },
+    { new: true }
+  )
+    .then(userFound => {
+      return;
     })
     .catch(err => console.log(err));
 }
