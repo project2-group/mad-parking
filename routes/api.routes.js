@@ -72,7 +72,7 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
   newComment
     .save()
     .then(comment => {
-      Parking.findOne({ _id: id }).then(parkingWithComment => {
+      Parking.findOne({ id_ayto: id }).then(parkingWithComment => {
         parkingWithComment
           .update(
             {
@@ -82,7 +82,6 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
           )
           .then(commentAdded => {
             getAssesment(parkingWithComment.id_ayto);
-            res.redirect(`/api/parking/${parkingWithComment.id_ayto}`);
           })
           .catch(err => console.log(err));
       });
