@@ -1,4 +1,3 @@
-
 {{#if dataView.home}}
 <p class="description">Encuentra plaza en tu parking más cercano</p>
 
@@ -17,16 +16,15 @@
 </ul>
 {{/if}}
 
+<script src="/javascripts/view-handlers/home.handler.js"></script>
 
 {{#if dataView.search}}
   <script>
-
     
     searchView.create();
     
     
     
-
       
     
   </script>
@@ -36,11 +34,7 @@
     
       const body = document.querySelector('body');
     const div = document.createElement('div');
-
     div.classList.add('socialSite');
-
     body.appendChild(div);
-
-
   </script>
 {{/if}}
