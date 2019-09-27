@@ -28,9 +28,11 @@ router.get("/parkingsForMarkers", (req, res, next) => {
 });
 
 router.get("/parking/:id", (req, res, next) => {
+  let id = req.params.id
   updateFreeSpots();
-  Parking.find({ id_ayto: req.params.id })
-  .populate({ path: "comments", populate: { path: "authorID" } })
+  getAssesment(id);
+  Parking.find({ id_ayto: id })
+    .populate({ path: "comments", populate: { path: "authorID" } })
     .then(data => {
       res.json(data);
     })
@@ -54,7 +56,6 @@ router.get("/parking/add-review/:id", (req, res, next) => {
     });
 });
 
-
 router.post("/parking/add-review", (req, res, next) => {
   const { text, assessment, id } = req.body;
   const newComment = new Comment({
@@ -65,14 +66,19 @@ router.post("/parking/add-review", (req, res, next) => {
   newComment
     .save()
     .then(comment => {
-      Parking.findOne({_id: id}).then((parkingWithComment) => {
-        parkingWithComment.update( { $push: { comments: comment._id, assessment: comment.assessment } }, {new:true})
-        .then((commentAdded) => {
-          res.redirect(`/api/parking/${parkingWithComment.id_ayto}`);
-        })
-        .catch(err => console.log(err));
-      })
-      
+      Parking.findOne({ _id: id }).then(parkingWithComment => {
+        parkingWithComment
+          .update(
+            {
+              $push: { comments: comment._id, assessment: comment.assessment }
+            },
+            { new: true }
+          )
+          .then(commentAdded => {
+            res.redirect(`/api/parking/${parkingWithComment.id_ayto}`);
+          })
+          .catch(err => console.log(err));
+      });
     })
     .catch(err => console.log(err));
 });
@@ -117,6 +123,29 @@ function updateFreeSpots() {
     })
     .catch(err => console.log(err.code));
 }
-
+function getAssesment(id) {
+ id = 5
+  Parking.find({id_ayto: id})
+    .then(parkingFound => {
+      parkingFound.forEach(element => {
+        let output =
+          element.assessment.reduce((ac, cu) => ac + +cu, 0) /
+          element.assessment.length;
+        let average = +output.toFixed(1);
+        Parking.findOneAndUpdate(
+          { _id: element.id },
+          { $set: { assessmentAverage: average } },
+          { new: true }
+        )
+          .then(updated => {
+            return;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+    })
+    .catch(err => console.log(err));
+}
 
 module.exports = router;
