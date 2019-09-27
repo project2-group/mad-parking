@@ -7,6 +7,8 @@ const parkingApi = new ParkingApi(
 const parkingDetailsApi = new ParkingApi(
   "https://datos.madrid.es/egob/catalogo/50027-2069413-AparcamientosOcupacionYServicios.json"
 );
+
+const access = require('./../middlewares/access.mid');
 const router = express.Router();
 const Comment = require("./../models/Comment");
 
@@ -26,6 +28,33 @@ router.get("/parkingsForMarkers", (req, res, next) => {
     res.json(allParkings);
   });
 });
+
+router.post('/parking/add-favorite', (req, res, next) => {
+  if(req.user) {
+    addFavorites(req.user.id, req.params.id)
+  } else {
+    return
+  }
+})
+
+function addFavorites(userId) {
+  Parking.findOne({ id_ayto: req.params.id })
+  .then((parkingFound) => {
+    currentParking = parkingFound.id;
+    User.findOneAndUpdate(
+      { id: userId },
+      { $push: { favoriteParkings: currentParking } },
+      { new: true }
+    )
+      .then(userFound => {
+        return;
+      })
+      .catch(err => console.log(err));
+  })
+  .catch((err) => console.log(err))
+  
+}
+
 
 router.get("/parking/:id", (req, res, next) => {
   let id = req.params.id
@@ -56,7 +85,7 @@ router.get("/parking/add-review/:id", (req, res, next) => {
     });
 });
 
-router.post("/parking/add-review", (req, res, next) => {
+router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
   const { text, assessment, id } = req.body;
   const newComment = new Comment({
     authorID: req.user.id,
@@ -66,7 +95,7 @@ router.post("/parking/add-review", (req, res, next) => {
   newComment
     .save()
     .then(comment => {
-      Parking.findOne({ _id: id }).then(parkingWithComment => {
+      Parking.findOne({ id_ayto: id }).then(parkingWithComment => {
         parkingWithComment
           .update(
             {
@@ -75,13 +104,16 @@ router.post("/parking/add-review", (req, res, next) => {
             { new: true }
           )
           .then(commentAdded => {
-            res.redirect(`/api/parking/${parkingWithComment.id_ayto}`);
+            getAssesment(parkingWithComment.id_ayto)
+            .then(res.status(200).json())
           })
           .catch(err => console.log(err));
       });
     })
     .catch(err => console.log(err));
 });
+
+
 
 function updateFreeSpots() {
   Parking.updateMany(

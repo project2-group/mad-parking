@@ -25,7 +25,8 @@
     
     searchView.create();
     
-   
+    
+    
 
       
     
@@ -34,7 +35,13 @@
 {{#if user}}
   <script>
     
-    setUser(`{{user}}`);
+      const body = document.querySelector('body');
+    const div = document.createElement('div');
+
+    div.classList.add('socialSite');
+
+    body.appendChild(div);
+
 
   </script>
 {{/if}}
