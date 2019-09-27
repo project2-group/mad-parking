@@ -419,6 +419,8 @@ function showDetails(id) {
         
             let service = '';
 
+            if(responseFromAPI.data[0].additionalServices) {
+
             if(responseFromAPI.data[0].additionalServices.adaptedBathroom) {
               service += '<span  class="icon-wheelchair"></span>';
             }
@@ -444,9 +446,11 @@ function showDetails(id) {
               service += '<span class="icon-info"></span>';
             }
            
+          }
 
             let typePay = '';
 
+            if(responseFromAPI.data[0].paymentType) { 
             if(responseFromAPI.data[0].paymentType.card) {
               typePay += '<span class="icon-credit-card"></span>';
             }
@@ -456,10 +460,12 @@ function showDetails(id) {
             if(responseFromAPI.data[0].paymentType.mobile) {
               typePay += '<span class="icon-phone"></span>';
             }
+          }
             
             
             let places = '';
 
+            if(responseFromAPI.data[0].parkingType) { 
             if(responseFromAPI.data[0].parkingType[0].pmr) {
               places += '<span class="icon-wheelchair"></span>';
             }
@@ -472,6 +478,7 @@ function showDetails(id) {
             if(responseFromAPI.data[0].parkingType[0].bike) {
               places += '<span class="icon-directions_bike"></span>';
             }
+          }
             
 
 
