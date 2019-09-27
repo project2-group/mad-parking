@@ -62,7 +62,6 @@ router.post("/details/add-review/:id", access.checkLogin,
       assessment
     })
       .then(newComment => {
-        console.log(newComment);
         Parking.findByIdAndUpdate(parkingid, { $push: { comments: newComment._id } }).then(commentAdded => {
           res.redirect(`/search/details/${parkingid}`);
           return;
