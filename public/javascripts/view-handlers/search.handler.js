@@ -14,7 +14,7 @@ const searchView = {
       <span id="place-address"></span>
     </div> `,
 
-  create:  () => {
+  create: function () {
 
     transitionService.create(this.container, this.contain);
     const map = mapService.init();
