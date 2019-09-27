@@ -161,16 +161,21 @@ function getAssesment(id) {
 }
 function addFavorites(userId) {
   userId = req.user.id;
-  currentParking = req.params.id;
-  User.findOneAndUpdate(
-    { id: userId },
-    { $push: { favoriteParkings: currentParking } },
-    { new: true }
-  )
-    .then(userFound => {
-      return;
-    })
-    .catch(err => console.log(err));
+  Parking.findOne({ id_ayto: req.params.id })
+  .then((parkingFound) => {
+    currentParking = parkingFound.id;
+    User.findOneAndUpdate(
+      { id: userId },
+      { $push: { favoriteParkings: currentParking } },
+      { new: true }
+    )
+      .then(userFound => {
+        return;
+      })
+      .catch(err => console.log(err));
+  })
+  .catch((err) => console.log(err))
+  
 }
 
 module.exports = router;
