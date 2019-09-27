@@ -9,6 +9,8 @@ const parkingDetailsApi = new ParkingApi(
 );
 const router = express.Router();
 const Comment = require("./../models/Comment");
+const access = require("./../middlewares/access.mid");
+
 
 router.get("/parkings", (req, res, next) => {
   const dataView = {
@@ -41,7 +43,7 @@ router.get("/parking/:id", (req, res, next) => {
     });
 });
 
-router.get("/parking/add-review/:id", (req, res, next) => {
+router.get("/parking/add-review/:id", access.checkLogin,(req, res, next) => {
   Parking.find({ id_ayto: req.params.id })
     .populate({ path: "comments", populate: { path: "authorID" } })
     .then(data => {
@@ -49,6 +51,7 @@ router.get("/parking/add-review/:id", (req, res, next) => {
         title: "madParking - Buscador de plazas de aparcamiento",
         header: "home"
       };
+      getAssesment(req.params.id)
       res.render("profile/comments", { data, dataView });
     })
     .catch(err => {
@@ -56,7 +59,7 @@ router.get("/parking/add-review/:id", (req, res, next) => {
     });
 });
 
-router.post("/parking/add-review", (req, res, next) => {
+router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
   const { text, assessment, id } = req.body;
   const newComment = new Comment({
     authorID: req.user.id,
@@ -75,6 +78,7 @@ router.post("/parking/add-review", (req, res, next) => {
             { new: true }
           )
           .then(commentAdded => {
+            getAssesment(parkingWithComment.id_ayto)
             res.redirect(`/api/parking/${parkingWithComment.id_ayto}`);
           })
           .catch(err => console.log(err));
@@ -124,7 +128,6 @@ function updateFreeSpots() {
     .catch(err => console.log(err.code));
 }
 function getAssesment(id) {
- id = 5
   Parking.find({id_ayto: id})
     .then(parkingFound => {
       parkingFound.forEach(element => {
