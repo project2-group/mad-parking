@@ -1,18 +1,31 @@
 <br><br>
-<h2 class="auth">PROFILE</h2>
+<h2 class="auth">PERFIL</h2>
 <br><br>
 <h3>
-  Your username: {{userFound.username}}
+  Tu usuario: {{userFound.username}}
 </h3>
 <p>
-  Your email is: {{userFound.email}}
+  Tu contraseña: {{userFound.email}}
 </p>
 <p>
-  Your picture is:
+  Tu foto:
 </p>
 <br>
 <img src="{{userFound.photo.url}}" alt="user-picture">
 <br><br><br>
-<a href="/profile/update">Update your profile</a>
+<a href="/profile/update">Actualiza tu perfil</a>
+
+<h3>Tus favoritos:</h3>
+<ul>
+{{#each}}
+<li>
+  <a href="/parking/{{userFound.favoriteParkings.id_ayto}}">{{userFound.favoriteParkings.nickname}}</a>
+</li>
+{{#unless}}
+<p>Todavía no tienes favoritos</p>
+{{/unless}}
+{{/each}}
+</ul>
+
 
 
