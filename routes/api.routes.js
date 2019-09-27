@@ -7,6 +7,8 @@ const parkingApi = new ParkingApi(
 const parkingDetailsApi = new ParkingApi(
   "https://datos.madrid.es/egob/catalogo/50027-2069413-AparcamientosOcupacionYServicios.json"
 );
+
+const access = require('./../middlewares/access.mid');
 const router = express.Router();
 const Comment = require("./../models/Comment");
 const access = require("./../middlewares/access.mid");
@@ -28,6 +30,33 @@ router.get("/parkingsForMarkers", (req, res, next) => {
     res.json(allParkings);
   });
 });
+
+router.post('/parking/add-favorite', (req, res, next) => {
+  if(req.user) {
+    addFavorites(req.user.id, req.params.id)
+  } else {
+    return
+  }
+})
+
+function addFavorites(userId) {
+  Parking.findOne({ id_ayto: req.params.id })
+  .then((parkingFound) => {
+    currentParking = parkingFound.id;
+    User.findOneAndUpdate(
+      { id: userId },
+      { $push: { favoriteParkings: currentParking } },
+      { new: true }
+    )
+      .then(userFound => {
+        return;
+      })
+      .catch(err => console.log(err));
+  })
+  .catch((err) => console.log(err))
+  
+}
+
 
 router.get("/parking/:id", (req, res, next) => {
   let id = req.params.id;
@@ -76,7 +105,7 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
   newComment
     .save()
     .then(comment => {
-      Parking.findOne({ _id: id }).then(parkingWithComment => {
+      Parking.findOne({ id_ayto: id }).then(parkingWithComment => {
         parkingWithComment
           .update(
             {
@@ -85,14 +114,17 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
             { new: true }
           )
           .then(commentAdded => {
-            // getAssesment(parkingWithComment.id_ayto);
+
+            getAssesment(parkingWithComment.id_ayto);
             res.redirect(`/api/parking/add-review/${parkingWithComment.id_ayto}?comment=true`);
+
           })
           .catch(err => console.log(err));
       });
     })
     .catch(err => console.log(err));
 });
+
 
 router.post('/parking/add-favorite', (req, res, next) => {
   if(req.user) {
@@ -104,6 +136,7 @@ router.post('/parking/add-favorite', (req, res, next) => {
 function roundHalf(n) {
   return (Math.round(n * 2) / 2).toFixed(1);
 }
+
 function updateFreeSpots() {
   Parking.updateMany(
     {},
