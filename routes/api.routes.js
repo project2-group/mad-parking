@@ -55,7 +55,11 @@ router.get("/parking/add-review/:id", access.checkLogin, (req, res, next) => {
         header: "home"
       };
       getAssesment(req.params.id);
-      res.render("profile/comments", { data, dataView });
+      if(req.query.comment) {
+        res.render("profile/comments", { data, dataView, message: "Gracias, hemos añadido tu comentario" })
+      } else {
+        res.render("profile/comments", { data, dataView })
+      }
     })
     .catch(err => {
       console.log(err);
@@ -81,8 +85,8 @@ router.post("/parking/add-review", access.checkLogin, (req, res, next) => {
             { new: true }
           )
           .then(commentAdded => {
-            getAssesment(parkingWithComment.id_ayto);
-            res.redirect(`/api/parking/${parkingWithComment.id_ayto}`);
+            // getAssesment(parkingWithComment.id_ayto);
+            res.redirect(`/api/parking/add-review/${parkingWithComment.id_ayto}?comment=true`);
           })
           .catch(err => console.log(err));
       });
