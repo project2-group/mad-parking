@@ -1,4 +1,4 @@
-  const passport = require("passport");
+const passport = require("passport");
 const ensureLogin = require("connect-ensure-login");
 const User = require("./../models/User")
 
