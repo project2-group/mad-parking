@@ -9,6 +9,7 @@
 
 // const bcryptSalt = 10;
 
+
 // mongoose
 //   .connect('mongodb://localhost/lab-nodemailer', {useNewUrlParser: true})
 //   .then(x => {
