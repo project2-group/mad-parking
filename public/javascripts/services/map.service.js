@@ -509,6 +509,9 @@ function showDetails(id) {
                      ${reviews}
                     </div>
                 </div>
+
+
+
               </div>
               
             `;
@@ -542,20 +545,16 @@ function showDetails(id) {
             body.appendChild(newDiv);
          
 
-          
+          setTimeout(() => {
+            newDiv.classList.add("show");
+          }, 300);
+          body.appendChild(newDiv);
         })
         .catch(err => console.log("Error is: ", err));
     });
 
 
   }, 1000);
- 
-    
 
-  
-
-
-  
-
-  
 }
+
