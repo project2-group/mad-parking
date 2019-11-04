@@ -8,7 +8,6 @@ const parkingDetailsApi = new ParkingApi(
   "https://datos.madrid.es/egob/catalogo/50027-2069413-AparcamientosOcupacionYServicios.json"
 );
 
-const access = require('./../middlewares/access.mid');
 const router = express.Router();
 const Comment = require("./../models/Comment");
 const access = require("./../middlewares/access.mid");
