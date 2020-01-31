@@ -1,8 +1,6 @@
 const searchView = {
-
-  container: 'search',
+  container: "search",
   contain: `<div id="map" class="map"></div>
-
     <div id="pac-container">
       <div><input id="pac-input" type="text" placeholder="Selecciona tu ubicación">
       <a id="usar-ubicacion" href="#"><span class="icon-location" title="Detectar ubicación"></span></a><span id="btn-search" class="icon-search"></span></div>
@@ -14,45 +12,32 @@ const searchView = {
       <span id="place-address"></span>
     </div> `,
 
-  create: function () {
-
+  create: function() {
     transitionService.create(this.container, this.contain);
     const map = mapService.init();
-    
+
     mapService.createInputSearch(map);
 
-    const ubicationButton = document.querySelector('#usar-ubicacion');
-    ubicationButton.addEventListener("click", function (e) {
+    const ubicationButton = document.querySelector("#usar-ubicacion");
+    ubicationButton.addEventListener("click", function(e) {
       e.preventDefault();
       mapService.geolocalMap(map);
     });
-    
 
-    const mainContainer = document.querySelector('.main-container');
+    const mainContainer = document.querySelector(".main-container");
 
-    mainContainer.classList.add('hidden');
+    mainContainer.classList.add("hidden");
 
-    const header = document.querySelector('header');
+    const header = document.querySelector("header");
 
+    setTimeout(function() {
+      header.classList.add("top");
+      
       setTimeout(function() {
-        
-        header.classList.add('top');
-
-        setTimeout(function() {
-          
-          document.querySelector('h1').classList.remove('hidden');
-          header.classList.add('top');
-
-          document.querySelector('.user-area').classList.add('show');
-        }, 30);
-
-
+        document.querySelector("h1").classList.remove("hidden");
+        header.classList.add("top");
+        document.querySelector(".user-area").classList.add("show");
       }, 30);
-    
-    
-    
+    }, 30);
   }
-}
-
-
-
+};

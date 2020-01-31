@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 const SALT_WORK_FACTOR = 10;
 
-// const PASSWORD_PATTERN = /(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,}/;
+const PASSWORD_PATTERN = /(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,}/;
 const EMAIL_PATTERN = /^(([^<>()\[\]\.,;:\s@\“]+(\.[^<>()\[\]\.,;:\s@\“]+)*)|(\“.+\“))@(([^<>()[\]\.,;:\s@\“]+\.)+[^<>()[\]\.,;:\s@\“]{2,})$/i;
 
 const userSchema = new Schema(
@@ -11,7 +11,7 @@ const userSchema = new Schema(
     username: { type: String, unique: true },
     password: {
       type: String,
-      // match: [PASSWORD_PATTERN, "this is not a correct password"]
+      match: [PASSWORD_PATTERN, "this is not a correct password"]
     },
     email: {
       type: String,
@@ -21,13 +21,16 @@ const userSchema = new Schema(
       match: [EMAIL_PATTERN, "this is not a correct email"]
     },
     photo: {
-      url: {type: String, default: "./../public/images/ef3b3605aeefde1f05bcfa2f74e84329.png"},
-      name: {type: String, default: "avatar"}
+      url: {
+        type: String,
+        default: "./../public/images/ef3b3605aeefde1f05bcfa2f74e84329.png"
+      },
+      name: { type: String, default: "avatar" }
     },
     validationCode: { type: String, unique: true },
-    active: {type: Boolean, default: false},
-    googleID: {type: String},
-    favoriteParkings: [{ type : Schema.Types.ObjectId, ref: 'Parking' }]
+    active: { type: Boolean, default: false },
+    googleID: { type: String },
+    favoriteParkings: [{ type: Schema.Types.ObjectId, ref: "Parking" }]
   },
   {
     timestamps: true

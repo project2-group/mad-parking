@@ -5,12 +5,12 @@
 <ul class="nav-home">
   <li><button class="search-map" id="search-map">Buscar en Madrid</button></li>
   {{#unless user}}
-  
 
-    <li><a class="social-login" id="social-login" href="/auth/google/"><span>Conectar con Google</span></a></li>
-    <li><span>
-        <a class="loginBtn" href="auth/login">Login</a> / 
-        <a class="signBtn" href="auth/signup">signup</a>
+
+  <li><a class="social-login" id="social-login" href="/auth/google/"><span>Conectar con Google</span></a></li>
+  <li><span>
+      <a class="loginBtn" href="auth/login">Login</a> /
+      <a class="signBtn" href="auth/signup">signup</a>
     </span></li>
   {{/unless}}
 </ul>
@@ -19,22 +19,15 @@
 <script src="/javascripts/view-handlers/home.handler.js"></script>
 
 {{#if dataView.search}}
-  <script>
-    
-    searchView.create();
-    
-    
-    
-      
-    
-  </script>
-  {{/if}}
+<script>
+  searchView.create();
+</script>
+{{/if}}
 {{#if user}}
-  <script>
-    
-      const body = document.querySelector('body');
-    const div = document.createElement('div');
-    div.classList.add('socialSite');
-    body.appendChild(div);
-  </script>
+<script>
+  const body = document.querySelector('body');
+  const div = document.createElement('div');
+  div.classList.add('socialSite');
+  body.appendChild(div);
+</script>
 {{/if}}

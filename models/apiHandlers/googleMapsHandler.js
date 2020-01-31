@@ -1,6 +1,6 @@
 // class routesHandler {
 //   constructor() {
-//     // this.baseURL = baseURL;
+//     this.baseURL = baseURL;
 //   }
 
 //   getDefaultMap() {
